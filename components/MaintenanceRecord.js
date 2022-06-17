@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
-import AddButton from './AddButton';
+import Button from './Button';
 import MaintenanceRecordTile from './MaintenanceRecordTile';
 
 const MaintenanceRecord = () => {
@@ -15,7 +15,7 @@ const MaintenanceRecord = () => {
                     <Text style={styles.subtitle}>Latest two records</Text>
                 </View>
                 <View>
-                    <AddButton onButtonPress={onAddButton} />
+                    <Button onButtonPress={onAddButton} />
                 </View>
             </View>
             <View>
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     MaintenanceRecordContainer: {
         backgroundColor: "#902923",
         borderRadius: 16,
-        padding: 16
+        padding: 16,
+        elevation: 4
     },
     titleContainer: {
         flexDirection: 'row',

@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native'
-import AddButton from './AddButton';
+import { View, Text, StyleSheet, Image } from 'react-native'
+import Button from './Button';
 import FuelEfficiencyTile from './FuelEfficiencyTile';
 
 const FuelEfficiency = () => {
@@ -15,7 +15,18 @@ const FuelEfficiency = () => {
                     <Text style={styles.subtitle}>Latest three records</Text>
                 </View>
                 <View>
-                    <AddButton onButtonPress={onAddButton} />
+                    <Button
+                        onButtonPress={onAddButton}
+                        icon={
+                            <Image
+                                style={{
+                                    height: 40,
+                                    width: 40
+                                }}
+                                source={require('../assets/images/plus-sign-icon-31.png')}
+                            />
+                        }
+                    />
                 </View>
             </View>
             <View>

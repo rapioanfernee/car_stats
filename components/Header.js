@@ -1,15 +1,24 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-const Header = () => {
+const Header = ({
+    title,
+    subtitle,
+    actionIcon,
+    actionIconOnPress
+}) => {
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.title}>Your Car Stats</Text>
-                <Text style={styles.subtitle}>Toyota Corolla Cross 2022 1.8G CVT</Text>
+                <Text style={styles.title}>{title}</Text>
+                {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
             </View>
-            <View>
-                <Image style={styles.image} source={require('../assets/images/settings-icon-1.png')} />
-            </View>
+            {
+                actionIcon ? (
+                    <TouchableOpacity onPress={actionIconOnPress}>
+                        {actionIcon}
+                    </TouchableOpacity>
+                ) : <View />
+            }
         </View>
     )
 }
@@ -30,11 +39,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         opacity: 0.5
     },
-    image: {
-        height: 35,
-        width: 35,
-        opacity: 0.75
-    }
 })
 
 export default Header;

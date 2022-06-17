@@ -44,6 +44,16 @@ const NavigationTabs = () => {
                 ),
             }}
         />
+        <Tab.Screen
+            name="Get Started"
+            component={Dashboard}
+            options={{
+                headerShown: false,
+                tabBarIcon: ({ size }) => (
+                    <Image style={{ height: size, width: size }} source={require('../assets/images/maintenance-icon.png')} />
+                ),
+            }}
+        />
     </Tab.Navigator>
 }
 
