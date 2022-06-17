@@ -1,0 +1,11 @@
+Light Mode Colors
+
+0A100D - Black
+B9BAA3 - Olive?
+D6D5C9 - Grey
+A22C29 - Red
+902923 - Reddish Maroon
+
+
+Dark Mode Colors
+
