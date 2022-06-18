@@ -1,12 +1,20 @@
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
 
-const Button = ({ onButtonPress, icon }) => {
+const Button = ({ buttonStyle, icon, onButtonPress, text, textColor }) => {
+    const styles = StyleSheet.create({
+        textButton: buttonStyle ? buttonStyle : {},
+        text: {
+            color: textColor ? textColor : 'black',
+            textAlign: 'center'
+        }
+    })
+
     return (
         <TouchableOpacity onPress={onButtonPress}>
             {icon ? icon : (
-                <View>
-                    <Text>
-                        ''
+                <View style={styles.textButton}>
+                    <Text style={styles.text}>
+                        {text ? text : ''}
                     </Text>
                 </View>
             )}
@@ -14,11 +22,5 @@ const Button = ({ onButtonPress, icon }) => {
     )
 }
 
-const styles = StyleSheet.create({
-    image: {
-        height: 40,
-        width: 40,
-    }
-})
 
 export default Button;

@@ -2,9 +2,11 @@ import { Image } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '../sheets/Dashboard'
+import Fuel from '../sheets/Fuel'
 
 const Tab = createBottomTabNavigator()
 
+// TO-DO: Add another route for Trips section
 const NavigationTabs = () => {
     return <Tab.Navigator
         screenOptions={{
@@ -26,7 +28,7 @@ const NavigationTabs = () => {
         />
         <Tab.Screen
             name="Fuel"
-            component={Dashboard}
+            component={Fuel}
             options={{
                 headerShown: false,
                 tabBarIcon: ({ size }) => (

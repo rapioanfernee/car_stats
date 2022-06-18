@@ -1,19 +1,28 @@
 import { useState } from 'react';
 import { StyleSheet, View, ScrollView, Image } from 'react-native';
+
+
 import FuelEfficiency from '../components/FuelEfficiency';
 import Header from '../components/Header';
 import MaintenanceRecord from '../components/MaintenanceRecord';
+import AddFuelEfficiencyRecord from './AddFuelEfficiencyRecord';
+import AddMaintenanceRecord from './AddMaintenanceRecord'
 import DashboardConfiguration from './DashboardConfiguration';
 
 const Dashboard = () => {
-    const [showModal, setShowModal] = useState(false);
+    const [openConfig, setOpenConfig] = useState(false);
+    const [openAddFuelRecord, setOpenAddFuelRecord] = useState(false);
+    const [openAddMaintenanceRecord, setOpenAddMaintenanceRecord] = useState(false)
+
     const onHeaderActionButtonPress = () => {
-        setShowModal(true)
+        setOpenConfig(true)
     }
 
     return (
         <ScrollView style={styles.appContainer}>
-            <DashboardConfiguration open={showModal} setOpen={setShowModal} />
+            <DashboardConfiguration open={openConfig} setOpen={setOpenConfig} />
+            <AddFuelEfficiencyRecord open={openAddFuelRecord} setOpen={setOpenAddFuelRecord} />
+            <AddMaintenanceRecord open={openAddMaintenanceRecord} setOpen={setOpenAddMaintenanceRecord} />
             <View style={styles.headerContainer}>
                 <Header
                     title="Dashboard"
@@ -29,10 +38,10 @@ const Dashboard = () => {
             </View>
             <View style={styles.headerContainer}>
                 <View style={styles.panelContainer}>
-                    <FuelEfficiency />
+                    <FuelEfficiency setOpenAddFuelRecord={setOpenAddFuelRecord} />
                 </View>
                 <View style={styles.panelContainer}>
-                    <MaintenanceRecord />
+                    <MaintenanceRecord setOpenAddMaintenanceRecord={setOpenAddMaintenanceRecord} />
                 </View>
             </View>
         </ScrollView>

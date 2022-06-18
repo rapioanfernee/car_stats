@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import Button from './Button';
 import FuelEfficiencyTile from './FuelEfficiencyTile';
 
-const FuelEfficiency = () => {
+const FuelEfficiency = ({ setOpenAddFuelRecord }) => {
     const onAddButton = () => {
-        console.log("Button Press");
+        setOpenAddFuelRecord(true)
     }
 
     return (

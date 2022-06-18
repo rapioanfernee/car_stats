@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import Button from './Button';
 import MaintenanceRecordTile from './MaintenanceRecordTile';
 
-const MaintenanceRecord = () => {
+const MaintenanceRecord = ({ setOpenAddMaintenanceRecord }) => {
     const onAddButton = () => {
-        console.log("Button Press");
+        setOpenAddMaintenanceRecord(true)
     }
 
     return (
@@ -15,7 +15,15 @@ const MaintenanceRecord = () => {
                     <Text style={styles.subtitle}>Latest two records</Text>
                 </View>
                 <View>
-                    <Button onButtonPress={onAddButton} />
+                    <Button onButtonPress={onAddButton} icon={
+                        <Image
+                            style={{
+                                height: 40,
+                                width: 40
+                            }}
+                            source={require('../assets/images/plus-sign-icon-31.png')}
+                        />
+                    } />
                 </View>
             </View>
             <View>
