@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet } from 'react-native'
 
-const FuelEfficiencyTile = () => {
+const FuelEfficiencyTile = ({ data }) => {
     return (
         <View style={styles.tileContainer}>
             <View style={styles.valueContainer}>
-                <Text style={styles.value}>--</Text>
+                <Text style={styles.value}>{data.fuelEconomy}</Text>
                 <Text style={styles.unit}>km/L</Text>
             </View>
             <View style={styles.valueContainer}>
-                <Text style={styles.value}>--</Text>
+                <Text style={styles.value}>{data.date}</Text>
                 <Text style={styles.unit}>Date</Text>
             </View>
             <View style={styles.valueContainer}>
-                <Text style={styles.value}>--</Text>
+                <Text style={styles.value}>{data.odometerReading} km</Text>
                 <Text style={styles.unit}>Odometer Reading</Text>
             </View>
         </View>
@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#902923",
         borderRadius: 8,
         paddingVertical: 16,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     valueContainer: {
         marginHorizontal: 8

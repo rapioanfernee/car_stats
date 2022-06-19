@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View, ScrollView, Image } from 'react-native';
 
 
-import FuelEfficiency from '../components/FuelEfficiency';
+import FuelEconomy from '../components/FuelEconomy';
 import Header from '../components/Header';
 import MaintenanceRecord from '../components/MaintenanceRecord';
 import AddFuelEfficiencyRecord from './AddFuelEfficiencyRecord';
@@ -17,6 +17,7 @@ const Dashboard = () => {
     const onHeaderActionButtonPress = () => {
         setOpenConfig(true)
     }
+
 
     return (
         <ScrollView style={styles.appContainer}>
@@ -38,7 +39,7 @@ const Dashboard = () => {
             </View>
             <View style={styles.headerContainer}>
                 <View style={styles.panelContainer}>
-                    <FuelEfficiency setOpenAddFuelRecord={setOpenAddFuelRecord} />
+                    <FuelEconomy setOpenAddFuelRecord={setOpenAddFuelRecord} />
                 </View>
                 <View style={styles.panelContainer}>
                     <MaintenanceRecord setOpenAddMaintenanceRecord={setOpenAddMaintenanceRecord} />
