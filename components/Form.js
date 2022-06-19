@@ -1,9 +1,8 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { useForm, Controller } from 'react-hook-form';
 
-import Button from './Button'
-
 const Form = ({
+    actionButton,
     fields,
     handleFormSubmit
 }) => {
@@ -42,7 +41,7 @@ const Form = ({
                                         {field.required ? (<Text style={{ color: 'red' }}>{' '}*</Text>) : ''}
                                     </Text>
                                     <TextInput
-                                        keyboardType='number-pad'
+                                        keyboardType={field.keyboardType}
                                         placeholder={field.placeholder}
                                         style={{
                                             ...styles.textInput,
@@ -62,24 +61,8 @@ const Form = ({
                     </View>
                 ))
             }
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ width: '30%' }}>
-                    <Button
-                        text="Submit"
-                        textColor="white"
-                        buttonStyle={styles.buttonSubmitStyle}
-                        onButtonPress={handleSubmit(onSubmit)}
-                    />
-                </View>
-                <View style={{ width: '30%', marginHorizontal: 16 }}>
-                    <Button
-                        text="Clear"
-                        textColor="#0A100D"
-                        buttonStyle={styles.buttonClearStyle}
-                        onButtonPress={() => reset()}
-                    />
-                </View>
-            </View>
+            {/* Optional action buttons. ex: Submit and clear button */}
+            {actionButton(handleSubmit, reset)}
         </View>
     )
 }
@@ -97,20 +80,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 8,
         marginVertical: 8
-    },
-    buttonSubmitStyle: {
-        border: 1,
-        borderRadius: 8,
-        backgroundColor: '#902923',
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-    },
-    buttonClearStyle: {
-        border: 1,
-        borderRadius: 8,
-        backgroundColor: '#D6D5C9',
-        paddingVertical: 8,
-        paddingHorizontal: 16,
     }
 })
 
