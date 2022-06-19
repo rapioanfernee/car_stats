@@ -6,36 +6,35 @@ import Form from '../components/Form'
 
 const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
 
-    const [distanceTraveled, setDistanceTraveled] = useState(0);
-    const [fuelRefilled, setFuelRefilled] = useState(0);
-    const [odometerReading, SetOdometerReading] = useState(0);
-
     const fields = [
         {
+            id: `distance-traveled-${Math.random(100)}`,
             label: "Distance Traveled",
-            name: distanceTraveled,
-            value: '',
+            name: 'distanceTraveled',
+            defaultValue: '',
             placeHolder: '0',
             required: true,
         },
         {
+            id: `fuel-refilled-${Math.random(100)}`,
             label: "Fuel Refiled",
-            name: fuelRefilled,
-            value: '',
+            name: 'fuelRefilled',
+            defaultValue: '',
             placeHolder: '0',
             required: true,
         },
         {
+            id: `odomoeter-reading-${Math.random(100)}-1`,
             label: "Odometer Reading",
-            name: odometerReading,
-            value: '',
+            name: 'odometerReading',
+            defaultValue: '',
             placeHolder: '0',
             required: false,
         },
     ]
 
-    const handleSubmit = () => {
-
+    const handleFormSubmit = (data) => {
+        console.log(data)
     }
 
     return (
@@ -56,7 +55,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
                 />
             </View>
 
-            <Form fields={fields} onSubmit={handleSubmit} />
+            <Form fields={fields} handleFormSubmit={handleFormSubmit} />
         </Modal>
     )
 }

@@ -1,57 +1,52 @@
-import { useState } from 'react';
-import { Modal, View, StyleSheet, Image } from 'react-native'
+import { Modal, View, StyleSheet, Image } from 'react-native';
+
 
 import Header from '../components/Header'
 import Form from '../components/Form'
 
 const AddMaintenanceRecord = ({ open, setOpen }) => {
 
-    const [recordedDate, setRecordedDate] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [odometerReading, SetOdometerReading] = useState(0);
-    const [receipt, setReceipt] = useState(null)
-
     const fields = [
         {
             label: "Recorded Date",
-            name: recordedDate,
-            value: '',
+            name: 'recordedDate',
+            defaultValue: '',
             placeHolder: '0',
             required: true,
             id: `distance-traveled-${Math.random(100)}`
         },
         {
             label: "Total Price",
-            name: totalPrice,
-            value: '',
+            name: 'totalPrice',
+            defaultValue: '',
             placeHolder: '0',
             required: true,
             id: `distance-traveled-${Math.random(100)}`
         },
         {
             label: "Odometer Reading",
-            name: odometerReading,
-            value: '',
+            name: 'odometerReading',
+            defaultValue: '',
             placeHolder: '0',
             required: false,
             id: `distance-traveled-${Math.random(100)}`
         },
         {
             label: "Receipt",
-            name: receipt,
-            value: '',
+            name: 'receipt',
+            defaultValue: '',
             placeHolder: '0',
             required: false,
             id: `distance-traveled-${Math.random(100)}`
         },
     ]
 
-    const handleSubmit = () => {
-
+    const handleFormSubmit = (data) => {
+        console.log(data)
     }
 
     return (
-        <Modal visible={open}>
+        <Modal visible={open} animationType="slide">
             <View style={styles.dashboardContainer}>
                 <Header
                     title="Add maintenance record"
@@ -67,7 +62,7 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
                     actionIconOnPress={() => setOpen(false)}
                 />
             </View>
-            <Form fields={fields} onSubmit={handleSubmit} />
+            <Form fields={fields} handleFormSubmit={handleFormSubmit} />
         </Modal>
     )
 }
