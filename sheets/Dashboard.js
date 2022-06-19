@@ -9,6 +9,11 @@ import AddFuelEfficiencyRecord from './AddFuelEfficiencyRecord';
 import AddMaintenanceRecord from './AddMaintenanceRecord'
 import DashboardConfiguration from './DashboardConfiguration';
 
+const DASHBOARD_SAMPLE_DATA = {
+    title: "Dashboard",
+    subtitle: "Toyota Corolla Cross 2022 1.8G CVT"
+}
+
 const Dashboard = () => {
     const [openConfig, setOpenConfig] = useState(false);
     const [openAddFuelRecord, setOpenAddFuelRecord] = useState(false);
@@ -26,8 +31,8 @@ const Dashboard = () => {
             <AddMaintenanceRecord open={openAddMaintenanceRecord} setOpen={setOpenAddMaintenanceRecord} />
             <View style={styles.headerContainer}>
                 <Header
-                    title="Dashboard"
-                    subtitle="Toyota Corolla Cross 2022 1.8G CVT"
+                    title={DASHBOARD_SAMPLE_DATA.title}
+                    subtitle={DASHBOARD_SAMPLE_DATA.subtitle}
                     actionIcon={
                         <Image
                             style={styles.image}

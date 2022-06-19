@@ -3,23 +3,23 @@ import Button from './Button';
 import FuelEfficiencyTile from './FuelEconomyTile';
 
 
-const FUEL_EFFICIENCY_SAMPLE_DATA = [
+const FUEL_ECONOMY_SAMPLE_DATA = [
     {
         id: '123',
         fuelEconomy: '9',
-        date: "April 2022",
+        date: "APR 2022",
         odometerReading: '500'
     },
     {
         id: '124',
         fuelEconomy: '10',
-        date: "May 2022",
+        date: "MAY 2022",
         odometerReading: '1050'
     },
     {
         id: '125',
         fuelEconomy: '11',
-        date: "June 2022",
+        date: "JUN 2022",
         odometerReading: '1550'
     }
 ]
@@ -52,10 +52,10 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
                     />
                 </View>
             </View>
-            {FUEL_EFFICIENCY_SAMPLE_DATA.slice(
+            {FUEL_ECONOMY_SAMPLE_DATA.slice(
                 // Get latest 3 entries
-                FUEL_EFFICIENCY_SAMPLE_DATA.length - 3,
-                FUEL_EFFICIENCY_SAMPLE_DATA.length
+                FUEL_ECONOMY_SAMPLE_DATA.length - 3,
+                FUEL_ECONOMY_SAMPLE_DATA.length
             ).map((data, index) => (
                 <View key={`${data.id}-${index}`}>
                     <FuelEfficiencyTile data={data} />

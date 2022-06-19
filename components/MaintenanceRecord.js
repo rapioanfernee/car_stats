@@ -2,6 +2,23 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import Button from './Button';
 import MaintenanceRecordTile from './MaintenanceRecordTile';
 
+const MAINTENANCE_RECORD_SAMPLE_DATA = [
+    {
+        id: '123-M',
+        date: "MAR 2022",
+        totalPrice: '1000',
+        odometerReading: '100',
+        receipt: 'N/A'
+    },
+    {
+        id: '124-M',
+        date: "MAY 2022",
+        TotalPrice: "7000",
+        odometerReading: '1050',
+        receipt: "N/A"
+    },
+]
+
 const MaintenanceRecord = ({ setOpenAddMaintenanceRecord }) => {
     const onAddButton = () => {
         setOpenAddMaintenanceRecord(true)
@@ -26,10 +43,15 @@ const MaintenanceRecord = ({ setOpenAddMaintenanceRecord }) => {
                     } />
                 </View>
             </View>
-            <View>
-                <MaintenanceRecordTile />
-                <MaintenanceRecordTile />
-            </View>
+
+            {MAINTENANCE_RECORD_SAMPLE_DATA.slice(
+                MAINTENANCE_RECORD_SAMPLE_DATA.length - 2, // Get latest 3 entries
+                MAINTENANCE_RECORD_SAMPLE_DATA.length
+            ).map((data, index) => (
+                <View key={`${data.id}-${index}`}>
+                    <MaintenanceRecordTile data={data} />
+                </View>
+            ))}
         </View>
     )
 }
