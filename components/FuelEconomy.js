@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     fuelEfficiencyContainer: {
         backgroundColor: "#902923",
         borderRadius: 16,
-        padding: 16
+        padding: 16,
+        elevation: 4
     },
     titleContainer: {
         flexDirection: 'row',
