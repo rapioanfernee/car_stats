@@ -1,17 +1,21 @@
 import { View, Text, Modal, StyleSheet, Image, TouchableOpacity } from 'react-native';
-
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 import Button from '../components/Button'
 import Form from "../components/Form"
 import Header from '../components/Header'
 
+import registerValidationSchema from '../components/formSchemas/registerValidationSchema'
+
+import config1 from '../colors'
+
 const Register = ({
     open,
     setOpen,
     setLoginScreenOpen,
-    setStartScreenOpen
+    setUser
 }) => {
-
+    const auth = getAuth();
     const REGISTER_FIELDS = [
         {
             id: `register-email-address-${Math.random(100)}`,
@@ -20,7 +24,7 @@ const Register = ({
             defaultValue: '',
             placeHolder: '0',
             required: true,
-            keyboardType: 'default'
+            keyboardType: 'email-address'
         },
         {
             id: `register-confirm-email-address-${Math.random(100)}`,
@@ -29,7 +33,7 @@ const Register = ({
             defaultValue: '',
             placeHolder: '0',
             required: true,
-            keyboardType: 'default'
+            keyboardType: 'email-address'
         },
         {
             id: `register-password-${Math.random(100)}`,
@@ -38,6 +42,7 @@ const Register = ({
             defaultValue: '',
             placeHolder: '0',
             required: true,
+            secureTextEntry: true,
             keyboardType: 'default'
         },
         {
@@ -47,12 +52,17 @@ const Register = ({
             defaultValue: '',
             placeHolder: '0',
             required: true,
+            secureTextEntry: true,
             keyboardType: 'default'
         }
     ]
 
-    const handleFormSubmit = (data) => {
-        console.log(data)
+    const handleSignUp = async (formData) => {
+        const response = await createUserWithEmailAndPassword(auth, formData.emailAddress, formData.password)
+        console.log(response)
+        if (response.user) {
+            setUser(response.user)
+        }
     }
 
     const ActionButtons = (handleSubmit, reset) => (
@@ -63,30 +73,18 @@ const Register = ({
                         text="Submit"
                         textColor="white"
                         buttonStyle={styles.buttonSubmitStyle}
-                        onButtonPress={handleSubmit(handleFormSubmit)}
+                        onButtonPress={handleSubmit(handleSignUp)}
                     />
                 </View>
                 <View style={{ width: '45%' }}>
                     <Button
                         text="Clear"
-                        textColor="#0A100D"
+                        textColor={config1.black}
                         buttonStyle={styles.buttonClearStyle}
                         onButtonPress={() => reset()}
                     />
                 </View>
             </View>
-
-            <TouchableOpacity
-                style={styles.loginButton}
-                onPress={() => {
-                    setOpen(false)
-                    setStartScreenOpen(false)
-                    setLoginScreenOpen(true)
-                }}>
-                <Text style={styles.loginbuttonText}>
-                    Aleady have an account? Login now!
-                </Text>
-            </TouchableOpacity>
         </>
     )
 
@@ -108,15 +106,15 @@ const Register = ({
                         }
                         actionIconOnPress={() => {
                             setOpen(false)
-                            setStartScreenOpen(true)
+                            setLoginScreenOpen(true)
                         }}
                     />
                 </View>
                 {/* Form */}
                 <Form
                     fields={REGISTER_FIELDS}
-                    handleFormSubmit={handleFormSubmit}
                     actionButton={ActionButtons}
+                    validationSchema={registerValidationSchema}
                 />
             </View>
         </Modal>
@@ -134,14 +132,14 @@ const styles = StyleSheet.create({
     buttonSubmitStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: '#902923',
+        backgroundColor: config1.red,
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
     buttonClearStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: '#D6D5C9',
+        backgroundColor: config1.grey,
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
@@ -151,8 +149,8 @@ const styles = StyleSheet.create({
     loginbuttonText: {
         fontSize: 17,
         borderBottomWidth: 1,
-        borderBottomColor: '#A22C29',
-        color: '#A22C29',
+        borderBottomColor: config1.red,
+        color: config1.red,
         textAlign: 'center',
     }
 })

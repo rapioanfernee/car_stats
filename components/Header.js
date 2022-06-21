@@ -1,11 +1,14 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
+import config1 from '../colors'
+
 const Header = ({
     title,
     subtitle,
     actionIcon,
     actionIconOnPress
 }) => {
+    console.log(config1)
     return (
         <View style={styles.container}>
             <View>
@@ -30,12 +33,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        color: '#0A100D',
+        color: config1.black,
         fontSize: 38,
         fontWeight: 'bold'
     },
     subtitle: {
-        color: '#0A100D',
+        color: config1.black,
         fontSize: 20,
         opacity: 0.5
     },

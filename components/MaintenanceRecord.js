@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import Button from './Button';
 import MaintenanceRecordTile from './MaintenanceRecordTile';
 
+import config1 from '../colors'
+
 const MAINTENANCE_RECORD_SAMPLE_DATA = [
     {
         id: '123-M',
@@ -36,7 +38,8 @@ const MaintenanceRecord = ({ setOpenAddMaintenanceRecord }) => {
                         <Image
                             style={{
                                 height: 40,
-                                width: 40
+                                width: 40,
+                                tintColor: 'white'
                             }}
                             source={require('../assets/images/plus-sign-icon-31.png')}
                         />
@@ -58,7 +61,7 @@ const MaintenanceRecord = ({ setOpenAddMaintenanceRecord }) => {
 
 const styles = StyleSheet.create({
     MaintenanceRecordContainer: {
-        backgroundColor: "#902923",
+        backgroundColor: config1.red,
         borderRadius: 16,
         padding: 16,
         elevation: 4

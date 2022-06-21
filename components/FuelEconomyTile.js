@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 
+import config1 from '../colors'
+
 const FuelEfficiencyTile = ({ data }) => {
     return (
         <View style={styles.tileContainer}>
@@ -21,7 +23,7 @@ const FuelEfficiencyTile = ({ data }) => {
 
 const styles = StyleSheet.create({
     tileContainer: {
-        backgroundColor: "#902923",
+        backgroundColor: config1.red,
         borderRadius: 8,
         paddingVertical: 16,
         flexDirection: 'row',
@@ -31,11 +33,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 8
     },
     value: {
-        color: '#D6D5C9',
+        color: config1.grey,
         fontSize: 18
     },
     unit: {
-        color: '#D6D5C9',
+        color: config1.grey,
         fontSize: 14
     }
 })

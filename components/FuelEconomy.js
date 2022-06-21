@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import Button from './Button';
 import FuelEfficiencyTile from './FuelEconomyTile';
 
+import config1 from '../colors'
 
 const FUEL_ECONOMY_SAMPLE_DATA = [
     {
@@ -44,7 +45,8 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
                             <Image
                                 style={{
                                     height: 40,
-                                    width: 40
+                                    width: 40,
+                                    tintColor: 'white'
                                 }}
                                 source={require('../assets/images/plus-sign-icon-31.png')}
                             />
@@ -67,7 +69,7 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
 
 const styles = StyleSheet.create({
     fuelEfficiencyContainer: {
-        backgroundColor: "#902923",
+        backgroundColor: config1.red,
         borderRadius: 16,
         padding: 16,
         elevation: 4

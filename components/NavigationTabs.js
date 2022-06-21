@@ -4,16 +4,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from '../sheets/Dashboard'
 import Fuel from '../sheets/Fuel'
 
+import config1 from '../colors'
+
 const Tab = createBottomTabNavigator()
 
 // TO-DO: Add another route for Trips section
 const NavigationTabs = () => {
     return <Tab.Navigator
         screenOptions={{
-            tabBarActiveTintColor: '#0A100D',
-            tabBarInactiveTintColor: "#0A100D",
-            tabBarActiveBackgroundColor: '#B9BAA3',
-            tabBarInactiveBackgroundColor: '#D6D5C9'
+            tabBarActiveTintColor: config1.black,
+            tabBarInactiveTintColor: config1.black,
+            tabBarActiveBackgroundColor: config1.olive,
+            tabBarInactiveBackgroundColor: config1.grey
         }}
     >
         <Tab.Screen

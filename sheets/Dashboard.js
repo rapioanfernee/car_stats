@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View, ScrollView, Image } from 'react-native';
-
+import { getAuth } from 'firebase/auth'
 
 import FuelEconomy from '../components/FuelEconomy';
 import Header from '../components/Header';
@@ -23,6 +23,11 @@ const Dashboard = () => {
         setOpenConfig(true)
     }
 
+    const handleSignout = async () => {
+        const auth = getAuth();
+        await auth.signOut();
+    }
+
 
     return (
         <ScrollView style={styles.appContainer}>
@@ -39,7 +44,7 @@ const Dashboard = () => {
                             source={require('../assets/images/settings-icon-1.png')}
                         />
                     }
-                    actionIconOnPress={onHeaderActionButtonPress}
+                    actionIconOnPress={handleSignout}
                 />
             </View>
             <View style={styles.headerContainer}>

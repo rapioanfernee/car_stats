@@ -1,66 +1,140 @@
-import { View, Text, Modal, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react'
+import {
+    View,
+    Text,
+    Modal,
+    StyleSheet,
+    Image,
+    TouchableOpacity
+} from 'react-native';
+import {
+    getAuth,
+    signInAnonymously,
+    signInWithEmailAndPassword,
+    signInWithCredential,
+    FacebookAuthProvider
+} from 'firebase/auth'
+
+import * as Facebook from 'expo-facebook';
 
 import Button from '../components/Button'
 import Form from "../components/Form"
 import Header from '../components/Header'
 
+import loginValidationSchema from '../components/formSchemas/loginValidationSchema';
+
+import config1 from '../colors'
+
+const LOGIN_FIELDS = [
+    {
+        id: `login-email-address-${Math.random(100)}`,
+        label: "Email Address",
+        name: 'emailAddress',
+        defaultValue: '',
+        placeHolder: 'Email Address',
+        required: true,
+        keyboardType: 'email-address'
+    },
+    {
+        id: `login-password-${Math.random(100)}`,
+        label: "Password",
+        name: 'password',
+        defaultValue: '',
+        placeHolder: '0',
+        required: true,
+        keyboardType: 'default',
+        secureTextEntry: true,
+    }
+]
+
 const Login = ({
     open,
     setOpen,
+    setAuthenticated,
     setRegisterScreenOpen,
-    setStartScreenOpen
+    setStartScreenOpen,
+    setUser
 }) => {
+    const auth = getAuth();
 
-    const LOGIN_FIELDS = [
-        {
-            id: `login-email-address-${Math.random(100)}`,
-            label: "Email Address",
-            name: 'emailAddress',
-            defaultValue: '',
-            placeHolder: '0',
-            required: true,
-            keyboardType: 'default'
-        },
-        {
-            id: `login-password-${Math.random(100)}`,
-            label: "Password",
-            name: 'password',
-            defaultValue: '',
-            placeHolder: '0',
-            required: true,
-            keyboardType: 'default'
-        }
-    ]
+    const [loginError, setLoginError] = useState('');
 
-    const handleFormSubmit = (data) => {
-        console.log(data)
+    const handleLogin = (formData) => {
+        signInWithEmailAndPassword(auth, formData.emailAddress, formData.password)
+            .then(userCredentials => {
+                setUser(userCredentials.user)
+            })
+            .catch(error => {
+                setLoginError(error.code)
+            })
     }
+
+    const anonymousLogin = () => {
+        signInAnonymously(auth)
+            .then(() => {
+                setOpen(false)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    // const signInWithFacebook = async () => {
+    //     try {
+    //         await Facebook.initializeAsync({
+    //             appId: process.env.FACEBOOK_APP_ID,
+    //         });
+    //         const { type, token } =
+    //             await Facebook.logInWithReadPermissionsAsync({
+    //                 permissions: ['public_profile'],
+    //             });
+    //         if (type === 'success') {
+    //             // Get the user's name using Facebook's Graph API
+    //             const facebookAuthProvider = new FacebookAuthProvider();
+    //             const credential = facebookAuthProvider.credential(token);
+    //             const response = await signInWithCredential(auth, credential).catch(error => {
+    //                 console.log(error)
+    //             });
+    //             console.log(response)
+    //             Alert.alert('Logged in!!');
+    //         } else {
+    //             // type === 'cancel'
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //         alert(`Facebook Login Error: ${error.message}`);
+    //     }
+    // }
 
     const ActionButtons = (handleSubmit, reset) => (
         <>
+            {loginError ? <LoginErrorMessage code={loginError} /> : <View />}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ width: '45%' }}>
                     <Button
                         text="Submit"
                         textColor="white"
                         buttonStyle={styles.buttonSubmitStyle}
-                        onButtonPress={handleSubmit(handleFormSubmit)}
+                        onButtonPress={handleSubmit(handleLogin)}
                     />
                 </View>
                 <View style={{ width: '45%' }}>
                     <Button
                         text="Clear"
-                        textColor="#0A100D"
+                        textColor={config1.black}
                         buttonStyle={styles.buttonClearStyle}
-                        onButtonPress={() => reset()}
+                        onButtonPress={() => {
+                            setLoginError('')
+                            reset()
+                        }}
                     />
                 </View>
             </View>
 
             <View style={styles.oAuthContainer}>
-                {/* Facebook Login Button */}
-                <View style={styles.oAuthButtons}>
-                    <Button onButtonPress={() => console.log("Login with Facebook")} icon={
+                {/* Facebook Login Button - Implement once published in Google Play*/}
+                {/* <View style={styles.oAuthButtons}>
+                    <Button onButtonPress={signInWithFacebook} icon={
                         <Image
                             style={{
                                 height: 50,
@@ -69,7 +143,7 @@ const Login = ({
                             source={require('../assets/images/facebook-icon.png')}
                         />
                     } />
-                </View>
+                </View> */}
 
                 {/* Google Login Button */}
                 <View style={styles.oAuthButtons}>
@@ -89,15 +163,40 @@ const Login = ({
                 style={styles.registerButton}
                 onPress={() => {
                     setOpen(false)
-                    setStartScreenOpen(false)
                     setRegisterScreenOpen(true)
                 }}>
                 <Text style={styles.registerbuttonText}>
                     Don't have an account yet? Register now!
                 </Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.registerButton}
+                onPress={anonymousLogin}>
+                <Text style={{ ...styles.registerbuttonText, borderBottomWidth: 0 }}>
+                    Or sign-in anonymously
+                </Text>
+            </TouchableOpacity>
         </>
     )
+
+
+    const LoginErrorMessage = ({ code }) => {
+        let errorMessage = ''
+        switch (code) {
+            case 'auth/user-not-found': {
+                errorMessage = 'User does not exist';
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        return (
+            <View>
+                <Text style={styles.errorMessage}>{errorMessage}</Text>
+            </View>
+        )
+    }
 
     return (
         <Modal visible={open} animationType="slide">
@@ -124,8 +223,8 @@ const Login = ({
                 {/* Form */}
                 <Form
                     fields={LOGIN_FIELDS}
-                    handleFormSubmit={handleFormSubmit}
                     actionButton={ActionButtons}
+                    validationSchema={loginValidationSchema}
                 />
             </View>
         </Modal>
@@ -143,14 +242,14 @@ const styles = StyleSheet.create({
     buttonSubmitStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: '#902923',
+        backgroundColor: config1.red,
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
     buttonClearStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: '#D6D5C9',
+        backgroundColor: config1.grey,
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
@@ -160,8 +259,8 @@ const styles = StyleSheet.create({
     registerbuttonText: {
         fontSize: 17,
         borderBottomWidth: 1,
-        borderBottomColor: '#A22C29',
-        color: '#A22C29'
+        borderBottomColor: config1.red,
+        color: config1.red
     },
     oAuthContainer: {
         flexDirection: 'row',
@@ -170,6 +269,10 @@ const styles = StyleSheet.create({
     },
     oAuthButtons: {
         marginHorizontal: 32,
+    },
+    errorMessage: {
+        color: config1.red,
+        marginBottom: 16
     }
 })
 

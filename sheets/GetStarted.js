@@ -8,7 +8,9 @@ import {
     TouchableOpacity
 } from 'react-native'
 
-const GetStarted = ({ open, setOpen }) => {
+import config1 from '../colors'
+
+const GetStarted = ({ open, setOpen, setLoginScreenOpen }) => {
     return (
         <Modal
             visible={open}
@@ -48,7 +50,10 @@ const GetStarted = ({ open, setOpen }) => {
                     </View>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => setOpen(false)}
+                        onPress={() => {
+                            setOpen(false)
+                            setLoginScreenOpen(true)
+                        }}
                     >
                         <Text style={styles.buttonText}>Get Started</Text>
                     </TouchableOpacity>
@@ -72,7 +77,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0, 0.90)'
     },
     button: {
-        backgroundColor: "#902923",
+        backgroundColor: config1.red,
         borderRadius: 50,
         paddingVertical: 16,
         paddingHorizontal: 32,

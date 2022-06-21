@@ -5,6 +5,8 @@ import Button from '../components/Button'
 import Header from '../components/Header'
 import Form from '../components/Form'
 
+import config1 from '../colors'
+
 const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
 
     const fields = [
@@ -76,7 +78,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
                             <View style={{ width: '30%', marginHorizontal: 16 }}>
                                 <Button
                                     text="Clear"
-                                    textColor="#0A100D"
+                                    textColor={config1.black}
                                     buttonStyle={styles.buttonClearStyle}
                                     onButtonPress={() => reset()}
                                 />
@@ -96,14 +98,14 @@ const styles = StyleSheet.create({
     buttonSubmitStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: '#902923',
+        backgroundColor: config1.red,
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
     buttonClearStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: '#D6D5C9',
+        backgroundColor: config1.grey,
         paddingVertical: 8,
         paddingHorizontal: 16,
     }

@@ -1,12 +1,11 @@
 {
   "expo": {
-    "name": "car_stat",
+    "name": "Car Stat",
+    "description": "Your daily app for logging your car's records",
     "slug": "car_stat",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    // "backgroundColor": "#0A100D",
-    // "backgroundColor": "#D6D5C9",
     "backgroundColor": "#ffffff",
     "userInterfaceStyle": "light",
     "splash": {
@@ -27,7 +26,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.penrapio.car.stat"
     },
     "web": {
       "favicon": "./assets/favicon.png"

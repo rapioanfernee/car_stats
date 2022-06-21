@@ -1,10 +1,13 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import config1 from '../colors'
 
 const Form = ({
     actionButton,
     fields,
-    handleFormSubmit
+    validationSchema = undefined,
 }) => {
 
     const formDefaultValues = fields.reduce((acc, cur) => ({
@@ -13,12 +16,11 @@ const Form = ({
     }), {})
 
     const { control, reset, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: formDefaultValues
+        criteriaMode: 'all',
+        defaultValues: formDefaultValues,
+        reValidateMode: 'onChange',
+        resolver: validationSchema ? yupResolver(validationSchema) : undefined
     })
-
-    const onSubmit = (data) => {
-        handleFormSubmit(data)
-    };
 
     return (
         <View style={styles.formContainer}>
@@ -41,23 +43,30 @@ const Form = ({
                                         {field.required ? (<Text style={{ color: 'red' }}>{' '}*</Text>) : ''}
                                     </Text>
                                     <TextInput
-                                        keyboardType={field.keyboardType}
-                                        placeholder={field.placeholder}
                                         style={{
                                             ...styles.textInput,
-                                            borderColor: errors[field.name]?.message ? 'red' : "#D6D5C9",
+                                            borderColor: errors[field.name]?.message ? 'red' : config1.grey,
                                         }}
                                         onBlur={onBlur}
                                         onChangeText={(val) => {
                                             onChange(val)
                                         }}
                                         value={value}
+                                        {...field}
                                     />
+                                    {
+                                        errors[field.name]?.message ?
+                                            <Text
+                                                style={styles.errorMessage}
+                                            >
+                                                {errors[field.name]?.message}
+                                            </Text>
+                                            : <Text></Text>
+                                    }
                                 </View>
                             )}
                             name={field.name}
                         />
-                        {errors[field.name]?.message ? <Text>errors[field.name]?.message</Text> : <Text></Text>}
                     </View>
                 ))
             }
@@ -73,13 +82,16 @@ const styles = StyleSheet.create({
         padding: 32,
     },
     fieldContainer: {
-        marginVertical: 8,
+        marginVertical: 4,
     },
     textInput: {
         borderWidth: 1,
         borderRadius: 8,
         padding: 8,
-        marginVertical: 8
+        marginVertical: 4,
+    },
+    errorMessage: {
+        color: config1.red
     }
 })
 
