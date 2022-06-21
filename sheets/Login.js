@@ -14,8 +14,7 @@ import {
     signInWithCredential,
     FacebookAuthProvider
 } from 'firebase/auth'
-
-import * as Facebook from 'expo-facebook';
+import { useToast } from 'react-native-toast-notifications'
 
 import Button from '../components/Button'
 import Form from "../components/Form"
@@ -56,6 +55,7 @@ const Login = ({
     setUser
 }) => {
     const auth = getAuth();
+    const toast = useToast();
 
     const [loginError, setLoginError] = useState('');
 

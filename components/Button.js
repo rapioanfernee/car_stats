@@ -10,7 +10,7 @@ const Button = ({ buttonStyle, icon, onButtonPress, text, textColor }) => {
     })
 
     return (
-        <TouchableOpacity onPress={onButtonPress}>
+        <TouchableOpacity delayPressIn={0} onPress={onButtonPress}>
             {icon ? icon : (
                 <View style={styles.textButton}>
                     <Text style={styles.text}>

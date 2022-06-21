@@ -7,6 +7,8 @@ import Form from '../components/Form'
 
 import config1 from '../colors'
 
+import fuelEfficiencyRecordValidationSchema from '../components/formSchemas/fuelEfficiencyRecordValidationSchema'
+
 const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
 
     const fields = [
@@ -47,7 +49,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
         <Modal visible={open} animationType="slide">
             <View style={styles.dashboardContainer}>
                 <Header
-                    title="Add record"
+                    title="Add fuel efficiency record"
                     actionIcon={
                         <Image
                             style={{
@@ -64,6 +66,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
             <Form
                 fields={fields}
                 handleFormSubmit={handleFormSubmit}
+                validationSchema={fuelEfficiencyRecordValidationSchema}
                 actionButton={(handleSubmit, reset) => (
                     <>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

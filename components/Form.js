@@ -10,6 +10,7 @@ const Form = ({
     validationSchema = undefined,
 }) => {
 
+
     const formDefaultValues = fields.reduce((acc, cur) => ({
         ...acc,
         [cur.name]: cur.defaultValue
@@ -19,8 +20,34 @@ const Form = ({
         criteriaMode: 'all',
         defaultValues: formDefaultValues,
         reValidateMode: 'onChange',
-        resolver: validationSchema ? yupResolver(validationSchema) : undefined
+        resolver: validationSchema ? yupResolver(validationSchema) : undefined,
+        delayError: 1000
     })
+
+    const CustomField = ({ onChange, onBlur, value, field }) => {
+        if (field.customField) {
+            const { CustomFieldComponent } = field
+            const customStyle = {
+                borderColor: errors[field.name]?.message ? 'red' : config1.grey,
+            }
+            const fieldProps = { onChange, onBlur, value, field, customStyle }
+            return <CustomFieldComponent {...fieldProps} />
+        }
+
+        return <TextInput
+            style={{
+                ...styles.textInput,
+                borderColor: errors[field.name]?.message ? 'red' : config1.grey,
+            }}
+            onBlur={onBlur}
+            onChangeText={(val) => {
+                onChange(val)
+            }}
+            value={value}
+            {...field}
+        />
+    }
+
 
     return (
         <View style={styles.formContainer}>
@@ -36,24 +63,12 @@ const Form = ({
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <View
                                     style={styles.fieldContainer}
-
                                 >
-                                    <Text>
+                                    <Text >
                                         {field.label}
                                         {field.required ? (<Text style={{ color: 'red' }}>{' '}*</Text>) : ''}
                                     </Text>
-                                    <TextInput
-                                        style={{
-                                            ...styles.textInput,
-                                            borderColor: errors[field.name]?.message ? 'red' : config1.grey,
-                                        }}
-                                        onBlur={onBlur}
-                                        onChangeText={(val) => {
-                                            onChange(val)
-                                        }}
-                                        value={value}
-                                        {...field}
-                                    />
+                                    <CustomField onChange={onChange} onBlur={onBlur} value={value} field={field} />
                                     {
                                         errors[field.name]?.message ?
                                             <Text

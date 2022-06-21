@@ -27,8 +27,10 @@
     "react-dom": "17.0.2",
     "react-hook-form": "^7.32.2",
     "react-native": "0.68.2",
+    "react-native-toast-notifications": "^3.3.0",
     "react-native-web": "0.17.7",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "@react-native-community/datetimepicker": "6.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

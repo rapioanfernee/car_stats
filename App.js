@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { initializeApp } from 'firebase/app'
-import {
-  getAuth,
-  onAuthStateChanged,
-} from 'firebase/auth'
-
+import { getAuth, onAuthStateChanged, } from 'firebase/auth';
+import { ToastProvider, useToast } from 'react-native-toast-notifications'
 import { firebaseConfig } from './firebase/firebase.config'
 
 import NavigationTabs from './components/NavigationTabs';
@@ -17,8 +14,7 @@ import Register from './sheets/Register';
 export default function App() {
   initializeApp(firebaseConfig)
   const auth = getAuth();
-  // Temporary authentication
-  // To-do: Do the real thing
+
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState();
 
@@ -58,30 +54,32 @@ export default function App() {
   }, [])
 
   return (
-    <NavigationContainer>
-      <StatusBar style='auto' />
-      <GetStarted
-        open={startScreenOpen}
-        setOpen={setStartScreenOpen}
-        setLoginScreenOpen={setLoginScreenOpen}
-      />
-      <Login
-        authenticated={authenticated}
-        open={loginScreenOpen}
-        setOpen={setLoginScreenOpen}
-        setStartScreenOpen={setStartScreenOpen}
-        setRegisterScreenOpen={setRegisterScreenOpen}
-        setUser={setUser}
-      />
-      <Register
-        authenticated={authenticated}
-        open={registerScreenOpen}
-        setOpen={setRegisterScreenOpen}
-        setLoginScreenOpen={setLoginScreenOpen}
-        setUser={setUser}
-      />
-      {authenticated && <NavigationTabs />}
-    </NavigationContainer >
+    <ToastProvider>
+      <NavigationContainer>
+        <StatusBar style='auto' />
+        <GetStarted
+          open={startScreenOpen}
+          setOpen={setStartScreenOpen}
+          setLoginScreenOpen={setLoginScreenOpen}
+        />
+        <Login
+          authenticated={authenticated}
+          open={loginScreenOpen}
+          setOpen={setLoginScreenOpen}
+          setStartScreenOpen={setStartScreenOpen}
+          setRegisterScreenOpen={setRegisterScreenOpen}
+          setUser={setUser}
+        />
+        <Register
+          authenticated={authenticated}
+          open={registerScreenOpen}
+          setOpen={setRegisterScreenOpen}
+          setLoginScreenOpen={setLoginScreenOpen}
+          setUser={setUser}
+        />
+        {authenticated && <NavigationTabs />}
+      </NavigationContainer >
+    </ToastProvider>
   );
 }
 

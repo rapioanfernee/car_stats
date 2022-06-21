@@ -6,6 +6,9 @@ import Form from '../components/Form'
 
 import config1 from '../colors'
 
+import maintenanceRecordValidationSchema from '../components/formSchemas/maintenanceRecordValidationSchema'
+import DatePickerTextInput from '../components/DatePickerTextInput';
+
 const AddMaintenanceRecord = ({ open, setOpen }) => {
 
     const fields = [
@@ -17,7 +20,8 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
             name: 'recordedDate',
             placeHolder: '0',
             required: true,
-
+            customField: true,
+            CustomFieldComponent: DatePickerTextInput
         },
         {
             defaultValue: '',
@@ -74,6 +78,7 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
             <Form
                 fields={fields}
                 handleFormSubmit={handleFormSubmit}
+                validationSchema={maintenanceRecordValidationSchema}
                 actionButton={(handleSubmit, reset) => (
                     <>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

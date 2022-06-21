@@ -19,3 +19,5 @@ const registerValidationSchema = yup.object().shape({
 })
 
 export default registerValidationSchema
+
+
