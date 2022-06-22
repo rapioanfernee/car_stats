@@ -13,8 +13,9 @@ import Register from './sheets/Register';
 
 export default function App() {
   initializeApp(firebaseConfig)
-  const auth = getAuth();
 
+  //To-Do: Create React Context for auth so there would be no need for re-calling getAuth();
+  const auth = getAuth();
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState();
 
@@ -53,33 +54,42 @@ export default function App() {
     initializeFirebase();
   }, [])
 
+
   return (
-    <ToastProvider>
-      <NavigationContainer>
-        <StatusBar style='auto' />
+    <NavigationContainer>
+      <StatusBar style='auto' />
+      {startScreenOpen && (
         <GetStarted
           open={startScreenOpen}
           setOpen={setStartScreenOpen}
           setLoginScreenOpen={setLoginScreenOpen}
         />
-        <Login
-          authenticated={authenticated}
-          open={loginScreenOpen}
-          setOpen={setLoginScreenOpen}
-          setStartScreenOpen={setStartScreenOpen}
-          setRegisterScreenOpen={setRegisterScreenOpen}
-          setUser={setUser}
-        />
-        <Register
-          authenticated={authenticated}
-          open={registerScreenOpen}
-          setOpen={setRegisterScreenOpen}
-          setLoginScreenOpen={setLoginScreenOpen}
-          setUser={setUser}
-        />
-        {authenticated && <NavigationTabs />}
-      </NavigationContainer >
-    </ToastProvider>
+      )}
+      {
+        loginScreenOpen && (
+          <Login
+            authenticated={authenticated}
+            open={loginScreenOpen}
+            setOpen={setLoginScreenOpen}
+            setStartScreenOpen={setStartScreenOpen}
+            setRegisterScreenOpen={setRegisterScreenOpen}
+            setUser={setUser}
+          />
+        )
+      }
+      {
+        registerScreenOpen && (
+          <Register
+            authenticated={authenticated}
+            open={registerScreenOpen}
+            setOpen={setRegisterScreenOpen}
+            setLoginScreenOpen={setLoginScreenOpen}
+            setUser={setUser}
+          />
+        )
+      }
+      {authenticated && <NavigationTabs />}
+    </NavigationContainer >
   );
 }
 

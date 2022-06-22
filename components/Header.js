@@ -8,7 +8,6 @@ const Header = ({
     actionIcon,
     actionIconOnPress
 }) => {
-    console.log(config1)
     return (
         <View style={styles.container}>
             <View>

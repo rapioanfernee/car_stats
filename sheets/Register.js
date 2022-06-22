@@ -59,7 +59,6 @@ const Register = ({
 
     const handleSignUp = async (formData) => {
         const response = await createUserWithEmailAndPassword(auth, formData.emailAddress, formData.password)
-        console.log(response)
         if (response.user) {
             setUser(response.user)
         }

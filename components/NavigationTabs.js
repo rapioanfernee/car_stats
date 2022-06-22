@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '../sheets/Dashboard'
 import Fuel from '../sheets/Fuel'
+import UserSettings from '../sheets/UserSettings';
 
 import config1 from '../colors'
 
@@ -24,7 +25,7 @@ const NavigationTabs = () => {
             options={{
                 headerShown: false,
                 tabBarIcon: ({ size }) => (
-                    <Image style={{ height: size, width: size }} source={require('../assets/images/dashboard-icon.png')} />
+                    <Image style={{ height: size, width: size, opacity: 0.5 }} source={require('../assets/images/dashboard-icon.png')} />
                 ),
             }}
         />
@@ -40,7 +41,7 @@ const NavigationTabs = () => {
         />
         <Tab.Screen
             name="Maintenance"
-            component={Dashboard}
+            component={Fuel}
             options={{
                 headerShown: false,
                 tabBarIcon: ({ size }) => (
@@ -49,12 +50,12 @@ const NavigationTabs = () => {
             }}
         />
         <Tab.Screen
-            name="Get Started"
-            component={Dashboard}
+            name="Account"
+            component={UserSettings}
             options={{
                 headerShown: false,
                 tabBarIcon: ({ size }) => (
-                    <Image style={{ height: size, width: size }} source={require('../assets/images/maintenance-icon.png')} />
+                    <Image style={{ height: size, width: size, opacity: 0.5 }} source={require('../assets/images/user-icon.png')} />
                 ),
             }}
         />

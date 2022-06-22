@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View, ScrollView, Image } from 'react-native';
-import { getAuth } from 'firebase/auth'
+
 
 import FuelEconomy from '../components/FuelEconomy';
 import Header from '../components/Header';
@@ -8,6 +8,8 @@ import MaintenanceRecord from '../components/MaintenanceRecord';
 import AddFuelEfficiencyRecord from './AddFuelEfficiencyRecord';
 import AddMaintenanceRecord from './AddMaintenanceRecord'
 import DashboardConfiguration from './DashboardConfiguration';
+
+import config1 from '../colors';
 
 const DASHBOARD_SAMPLE_DATA = {
     title: "Dashboard",
@@ -23,17 +25,23 @@ const Dashboard = () => {
         setOpenConfig(true)
     }
 
-    const handleSignout = async () => {
-        const auth = getAuth();
-        await auth.signOut();
-    }
-
 
     return (
         <ScrollView style={styles.appContainer}>
-            <DashboardConfiguration open={openConfig} setOpen={setOpenConfig} />
-            <AddFuelEfficiencyRecord open={openAddFuelRecord} setOpen={setOpenAddFuelRecord} />
-            <AddMaintenanceRecord open={openAddMaintenanceRecord} setOpen={setOpenAddMaintenanceRecord} />
+            {
+                openConfig && (
+                    <DashboardConfiguration open={openConfig} setOpen={setOpenConfig} />
+                )}
+            {
+                openAddFuelRecord && (
+                    <AddFuelEfficiencyRecord open={openAddFuelRecord} setOpen={setOpenAddFuelRecord} />
+                )
+            }
+            {
+                openAddMaintenanceRecord && (
+                    <AddMaintenanceRecord open={openAddMaintenanceRecord} setOpen={setOpenAddMaintenanceRecord} />
+                )
+            }
             <View style={styles.headerContainer}>
                 <Header
                     title={DASHBOARD_SAMPLE_DATA.title}
@@ -41,10 +49,10 @@ const Dashboard = () => {
                     actionIcon={
                         <Image
                             style={styles.image}
-                            source={require('../assets/images/settings-icon-1.png')}
+                            source={require('../assets/images/settings-icon.png')}
                         />
                     }
-                    actionIconOnPress={handleSignout}
+                    actionIconOnPress={onHeaderActionButtonPress}
                 />
             </View>
             <View style={styles.headerContainer}>
@@ -70,8 +78,9 @@ const styles = StyleSheet.create({
         marginVertical: 16
     },
     image: {
-        height: 35,
-        width: 35,
+        tintColor: config1.black,
+        height: 25,
+        width: 25,
         opacity: 0.75
     }
 });

@@ -3,7 +3,7 @@ import Header from '../components/Header'
 
 const DashboardConfiguration = ({ open, setOpen }) => {
     return (
-        <Modal visible={open}>
+        <Modal visible={open} animationType='slide' >
             <View style={styles.dashboardContainer}>
                 <Header
                     title="Dashboard Settings"
