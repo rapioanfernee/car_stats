@@ -1,8 +1,9 @@
+import { useMemo } from 'react'
 import { Image, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import { getAuth } from 'firebase/auth'
 
 import Header from '../components/Header'
 import config1 from '../colors'
+import { useFirebase } from '../context/firebase-context'
 
 const SETTINGS = [
     {
@@ -50,16 +51,13 @@ const SETTINGS = [
                 label: "Logout user",
                 name: 'logoutUser',
                 category: 'authentication',
-                onPress: async (auth) => {
-                    await auth.signOut();
-                }
             },
         ]
     }
 ]
 
 const UserSettings = () => {
-    const auth = getAuth();
+    const { auth } = useFirebase();
 
     const filterUserSettings = (settings) => {
         let disabledSettings = []
@@ -71,6 +69,12 @@ const UserSettings = () => {
         }
         return settings.filter(setting => !disabledSettings.includes(setting.name))
     }
+
+    const settingAction = useMemo(() => ({
+        logoutUser: () => {
+            auth.signOut();
+        }
+    }), [])
 
     const HorizontalLine = ({ borderColor, marginLeft }) => (
         <View style={{ ...styles.horizontalLine, borderColor, marginLeft }} />
@@ -103,7 +107,7 @@ const UserSettings = () => {
                                             <View key={`${setting.id}-${indexSecond}`}>
                                                 <TouchableOpacity
                                                     style={styles.setting}
-                                                    onPress={() => setting?.onPress(auth)}
+                                                    onPress={settingAction[setting.name]}
                                                     delayPressIn={500}
                                                 >
                                                     <Text style={styles.settingText}>

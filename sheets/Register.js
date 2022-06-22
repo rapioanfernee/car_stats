@@ -1,5 +1,4 @@
-import { View, Text, Modal, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { View, Modal, StyleSheet, Image } from 'react-native';
 
 import Button from '../components/Button'
 import Form from "../components/Form"
@@ -8,6 +7,48 @@ import Header from '../components/Header'
 import registerValidationSchema from '../components/formSchemas/registerValidationSchema'
 
 import config1 from '../colors'
+import { useFirebase } from '../context/firebase-context';
+
+const REGISTER_FIELDS = [
+    {
+        id: `register-email-address-${Math.random(100)}`,
+        label: "Email Address",
+        name: 'emailAddress',
+        defaultValue: '',
+        placeHolder: '0',
+        required: true,
+        keyboardType: 'email-address'
+    },
+    {
+        id: `register-confirm-email-address-${Math.random(100)}`,
+        label: "Confirm Email Address",
+        name: 'confirmEmailAddress',
+        defaultValue: '',
+        placeHolder: '0',
+        required: true,
+        keyboardType: 'email-address'
+    },
+    {
+        id: `register-password-${Math.random(100)}`,
+        label: "Password",
+        name: 'password',
+        defaultValue: '',
+        placeHolder: '0',
+        required: true,
+        secureTextEntry: true,
+        keyboardType: 'default'
+    },
+    {
+        id: `register-confirm-password-${Math.random(100)}`,
+        label: "Confirm Password",
+        name: 'confirmPassword',
+        defaultValue: '',
+        placeHolder: '0',
+        required: true,
+        secureTextEntry: true,
+        keyboardType: 'default'
+    }
+]
 
 const Register = ({
     open,
@@ -15,53 +56,15 @@ const Register = ({
     setLoginScreenOpen,
     setUser
 }) => {
-    const auth = getAuth();
-    const REGISTER_FIELDS = [
-        {
-            id: `register-email-address-${Math.random(100)}`,
-            label: "Email Address",
-            name: 'emailAddress',
-            defaultValue: '',
-            placeHolder: '0',
-            required: true,
-            keyboardType: 'email-address'
-        },
-        {
-            id: `register-confirm-email-address-${Math.random(100)}`,
-            label: "Confirm Email Address",
-            name: 'confirmEmailAddress',
-            defaultValue: '',
-            placeHolder: '0',
-            required: true,
-            keyboardType: 'email-address'
-        },
-        {
-            id: `register-password-${Math.random(100)}`,
-            label: "Password",
-            name: 'password',
-            defaultValue: '',
-            placeHolder: '0',
-            required: true,
-            secureTextEntry: true,
-            keyboardType: 'default'
-        },
-        {
-            id: `register-confirm-password-${Math.random(100)}`,
-            label: "Confirm Password",
-            name: 'confirmPassword',
-            defaultValue: '',
-            placeHolder: '0',
-            required: true,
-            secureTextEntry: true,
-            keyboardType: 'default'
-        }
-    ]
+    const { auth, createUserWithEmailAndPassword } = useFirebase();
 
-    const handleSignUp = async (formData) => {
-        const response = await createUserWithEmailAndPassword(auth, formData.emailAddress, formData.password)
-        if (response.user) {
-            setUser(response.user)
-        }
+    const handleSignUp = (formData) => {
+        createUserWithEmailAndPassword(
+            auth,
+            formData,
+            (response) => setUser(response.user),
+            (error) => console.log(error)
+        )
     }
 
     const ActionButtons = (handleSubmit, reset) => (

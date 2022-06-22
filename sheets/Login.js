@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     View,
     Text,
@@ -7,14 +7,6 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
-import {
-    getAuth,
-    signInAnonymously,
-    signInWithEmailAndPassword,
-    signInWithCredential,
-    FacebookAuthProvider
-} from 'firebase/auth'
-import { useToast } from 'react-native-toast-notifications'
 
 import Button from '../components/Button'
 import Form from "../components/Form"
@@ -23,6 +15,7 @@ import Header from '../components/Header'
 import loginValidationSchema from '../components/formSchemas/loginValidationSchema';
 
 import config1 from '../colors'
+import { useFirebase } from '../context/firebase-context';
 
 const LOGIN_FIELDS = [
     {
@@ -49,34 +42,33 @@ const LOGIN_FIELDS = [
 const Login = ({
     open,
     setOpen,
-    setAuthenticated,
     setRegisterScreenOpen,
     setStartScreenOpen,
     setUser
 }) => {
-    const auth = getAuth();
-    const toast = useToast();
+    const {
+        auth,
+        signInWithEmailAndPassword,
+        signInAnonymously
+    } = useFirebase();
 
     const [loginError, setLoginError] = useState('');
 
     const handleLogin = (formData) => {
-        signInWithEmailAndPassword(auth, formData.emailAddress, formData.password)
-            .then(userCredentials => {
-                setUser(userCredentials.user)
-            })
-            .catch(error => {
-                setLoginError(error.code)
-            })
+        signInWithEmailAndPassword(
+            formData,
+            (userCredentials) => setUser(userCredentials.user),
+            error => setLoginError(error.code)
+        )
     }
 
     const anonymousLogin = () => {
-        signInAnonymously(auth)
-            .then(() => {
-                setOpen(false)
-            })
-            .catch((error) => {
+        signInAnonymously(
+            () => setOpen(false),
+            (error) => {
                 console.log(error)
-            })
+            }
+        );
     }
 
     // const signInWithFacebook = async () => {
