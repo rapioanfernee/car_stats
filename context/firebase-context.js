@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useMemo } from 'react'
+import { initializeApp } from 'firebase/app'
 import {
     createUserWithEmailAndPassword,
     getAuth,
@@ -8,7 +9,8 @@ import {
     signInWithCredential,
     FacebookAuthProvider
 } from 'firebase/auth';
-import { initializeApp } from 'firebase/app'
+import { getDatabase, ref, push } from 'firebase/database'
+
 import { firebaseConfig } from '../firebase/firebase.config'
 
 const FirebaseContext = React.createContext();
@@ -18,15 +20,13 @@ export const useFirebase = () => {
 }
 
 export const FirebaseProvider = ({ children }) => {
-    initializeApp(firebaseConfig)
+    const firebaseApp = initializeApp(firebaseConfig)
+    const db = getDatabase(firebaseApp)
 
-    const [auth, setAuth] = useState(getAuth());
 
-    useEffect(() => {
+    const [auth, setAuth] = useState(getAuth(firebaseApp));
 
-    }, [])
-
-    const firebaseValues = useMemo(() => ({
+    const authentication = useMemo(() => ({
         auth,
         createUserWithEmailAndPassword: (formData, onSuccess, onError) => {
             createUserWithEmailAndPassword(auth, formData.emailAddress, formData.password)
@@ -48,10 +48,34 @@ export const FirebaseProvider = ({ children }) => {
                 .catch(onError)
         },
         signInWithCredential,
-    }), [])
+    }), [auth])
+
+    const database = useMemo(() => ({
+        db,
+        addUser: (email, userId, onSuccess, onError) => {
+            push(ref(db, '/users'), { email, userId })
+                .then(onSuccess)
+                .catch(onError)
+        },
+        updateUser: () => {
+
+        },
+        deleteUser: () => { }
+    }))
+
+    const props = useMemo(() => ({
+        ...authentication,
+        ...database,
+    }), [authentication,])
+
+
+    useEffect(() => {
+
+    }, [])
+
 
     return (
-        <FirebaseContext.Provider value={firebaseValues}>
+        <FirebaseContext.Provider value={props}>
             {children}
         </FirebaseContext.Provider>
     )

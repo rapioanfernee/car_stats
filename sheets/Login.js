@@ -180,6 +180,7 @@ const Login = ({
                 break;
             }
             default: {
+                errorMessage = code
                 break;
             }
         }

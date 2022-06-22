@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { View, Modal, StyleSheet, Image } from 'react-native';
 
 import Button from '../components/Button'
@@ -56,19 +57,29 @@ const Register = ({
     setLoginScreenOpen,
     setUser
 }) => {
-    const { auth, createUserWithEmailAndPassword } = useFirebase();
+    const { addUser, createUserWithEmailAndPassword } = useFirebase();
+
+    const [registerError, setRegisterError] = useState('');
 
     const handleSignUp = (formData) => {
         createUserWithEmailAndPassword(
-            auth,
             formData,
-            (response) => setUser(response.user),
-            (error) => console.log(error)
+            ({ user }) => {
+                setUser(user);
+                addUser(
+                    user.email,
+                    user.uid,
+                    () => { },
+                    (error) => console.log(error)
+                )
+            },
+            (error) => setRegisterError(error)
         )
     }
 
     const ActionButtons = (handleSubmit, reset) => (
         <>
+            {registerError ? <LoginErrorMessage code={registerError} /> : <View />}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ width: '45%' }}>
                     <Button
@@ -83,12 +94,34 @@ const Register = ({
                         text="Clear"
                         textColor={config1.black}
                         buttonStyle={styles.buttonClearStyle}
-                        onButtonPress={() => reset()}
+                        onButtonPress={() => {
+                            setRegisterError('')
+                            reset()
+                        }}
                     />
                 </View>
             </View>
         </>
     )
+
+    const RegisterErrorMessage = ({ code }) => {
+        let errorMessage = ''
+        switch (code) {
+            case 'auth/email-already-in-use': {
+                errorMessage = 'Email already used';
+                break;
+            }
+            default: {
+                errorMessage = code
+                break;
+            }
+        }
+        return (
+            <View>
+                <Text style={styles.errorMessage}>{errorMessage}</Text>
+            </View>
+        )
+    }
 
     return (
         <Modal visible={open} animationType="slide">

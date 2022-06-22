@@ -23,8 +23,11 @@ export default function Main() {
 
     const initializeFirebase = () => {
         onAuthStateChanged(authUser => {
-            if (currentUser !== null) {
+            if (authUser !== null) {
                 setCurrentUser(authUser)
+            }
+            else {
+                setCurrentUser(null)
             }
         })
     }
