@@ -10,10 +10,12 @@ import config1 from '../colors'
 import fuelEfficiencyRecordValidationSchema from '../components/formSchemas/fuelEfficiencyRecordValidationSchema'
 import { useFirebase } from '../context/firebase-context';
 import { useUser } from '../context/user-context';
+import { useCar } from '../context/car-context'
 
 const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
     const { addFuelEconomy } = useFirebase();
     const { currentUser } = useUser()
+    const { currentCar } = useCar()
 
     const [submitError, setSubmitError] = useState('');
 
@@ -52,7 +54,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
         const fuelEconomy = Number(distanceTraveled) / Number(fuelRefilled);
         const newFormData = { ...formData, fuelEconomy }
         addFuelEconomy(
-            { formData: newFormData, userId: currentUser.uid },
+            { formData: newFormData, userId: currentUser.uid, carId: currentCar.id },
             (response) => setOpen(false), // To-Do: Add toast when success
             (error) => setSubmitError(error.code)
         )

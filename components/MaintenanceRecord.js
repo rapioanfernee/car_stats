@@ -8,16 +8,14 @@ const MAINTENANCE_RECORD_SAMPLE_DATA = [
     {
         id: '123-M',
         date: "MAR 2022",
-        totalPrice: '1000',
+        price: '1000',
         odometerReading: '100',
-        receipt: 'N/A'
     },
     {
         id: '124-M',
         date: "MAY 2022",
-        TotalPrice: "7000",
+        price: "7000",
         odometerReading: '1050',
-        receipt: "N/A"
     },
 ]
 

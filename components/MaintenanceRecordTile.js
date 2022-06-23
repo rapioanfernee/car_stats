@@ -10,17 +10,17 @@ const MaintenanceRecordTile = ({ data }) => {
                 <Text style={styles.unit}>Date</Text>
             </View>
             <View style={styles.valueContainer}>
-                <Text style={styles.value}>{data.price}PHP</Text>
+                <Text style={styles.value}>{data.price} PHP</Text>
                 <Text style={styles.unit}>Price</Text>
             </View>
             <View style={styles.valueContainer}>
                 <Text style={styles.value}>{data.odometerReading} km</Text>
                 <Text style={styles.unit}>Odometer</Text>
             </View>
-            <View style={styles.valueContainer}>
+            {/* <View style={styles.valueContainer}>
                 <Text style={styles.value}>{data.receipt}</Text>
                 <Text style={styles.unit}>Receipt</Text>
-            </View>
+            </View> */}
         </View>
     )
 }

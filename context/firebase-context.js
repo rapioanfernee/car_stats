@@ -57,8 +57,13 @@ export const FirebaseProvider = ({ children }) => {
                 .then(onSuccess)
                 .catch(onError)
         },
-        addFuelEconomy: ({ formData, userId }, onSuccess, onError) => {
-            push(ref(db, '/fuelEconomy'), { ...formData, userId })
+        addFuelEconomy: ({ formData, userId, carId }, onSuccess, onError) => {
+            push(ref(db, '/fuelEconomy'), { ...formData, userId, carId })
+                .then(onSuccess)
+                .catch(onError)
+        },
+        addMaintenanceRecord: ({ formData, userId, carId }, onSuccess, onError) => {
+            push(ref(db, '/maintenanceRecord'), { ...formData, userId, carId })
                 .then(onSuccess)
                 .catch(onError)
         },

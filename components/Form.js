@@ -19,7 +19,7 @@ const Form = ({
     const { control, reset, handleSubmit, formState: { errors } } = useForm({
         criteriaMode: 'all',
         defaultValues: formDefaultValues,
-        reValidateMode: 'onChange',
+        reValidateMode: 'onSubmit',
         resolver: validationSchema ? yupResolver(validationSchema) : undefined,
         delayError: 1000
     })

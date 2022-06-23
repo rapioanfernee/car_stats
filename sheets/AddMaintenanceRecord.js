@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Modal, View, StyleSheet, Image } from 'react-native';
 
 import Button from '../components/Button'
@@ -9,7 +10,16 @@ import config1 from '../colors'
 import maintenanceRecordValidationSchema from '../components/formSchemas/maintenanceRecordValidationSchema'
 import DatePickerTextInput from '../components/DatePickerTextInput';
 
+import { useFirebase } from '../context/firebase-context';
+import { useUser } from '../context/user-context';
+import { useCar } from '../context/car-context'
+
 const AddMaintenanceRecord = ({ open, setOpen }) => {
+    const { addMaintenanceRecord } = useFirebase();
+    const { currentUser } = useUser()
+    const { currentCar } = useCar()
+
+    const [submitError, setSubmitError] = useState('');
 
     const fields = [
         {
@@ -42,20 +52,25 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
             required: false,
 
         },
-        {
-            defaultValue: '',
-            id: `distance-traveled-${Math.random(100)}`,
-            keyboardType: 'number-pad',
-            label: "Receipt",
-            name: 'receipt',
-            placeHolder: '0',
-            required: false,
+        // {
+        //     defaultValue: '',
+        //     id: `distance-traveled-${Math.random(100)}`,
+        //     keyboardType: 'number-pad',
+        //     label: "Receipt",
+        //     name: 'receipt',
+        //     placeHolder: '0',
+        //     required: false,
 
-        },
+        // },
     ]
 
-    const handleFormSubmit = (data) => {
-        console.log(data)
+    const handleFormSubmit = (formData) => {
+        console.log(formData)
+        addMaintenanceRecord(
+            { formData, userId: currentUser.uid, carId: currentCar.id },
+            (response) => setOpen(false), // To-Do: Add toast when success
+            (error) => setSubmitError(error.code)
+        )
     }
 
     return (
@@ -81,6 +96,9 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
                 validationSchema={maintenanceRecordValidationSchema}
                 actionButton={(handleSubmit, reset) => (
                     <>
+                        {submitError ? <View>
+                            <Text style={styles.errorMessage}>{submitError}</Text>
+                        </View> : <View />}
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <View style={{ width: '30%' }}>
                                 <Button
@@ -95,7 +113,10 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
                                     text="Clear"
                                     textColor={config1.black}
                                     buttonStyle={styles.buttonClearStyle}
-                                    onButtonPress={() => reset()}
+                                    onButtonPress={() => {
+                                        setSubmitError('')
+                                        reset()
+                                    }}
                                 />
                             </View>
                         </View>
