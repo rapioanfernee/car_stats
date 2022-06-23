@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, View, StyleSheet, Image } from 'react-native'
+import { Modal, View, StyleSheet, Image, Text } from 'react-native'
 
 import Button from '../components/Button'
 import Header from '../components/Header'
@@ -8,8 +8,14 @@ import Form from '../components/Form'
 import config1 from '../colors'
 
 import fuelEfficiencyRecordValidationSchema from '../components/formSchemas/fuelEfficiencyRecordValidationSchema'
+import { useFirebase } from '../context/firebase-context';
+import { useUser } from '../context/user-context';
 
 const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
+    const { addFuelEconomy } = useFirebase();
+    const { currentUser } = useUser()
+
+    const [submitError, setSubmitError] = useState('');
 
     const fields = [
         {
@@ -41,8 +47,15 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
         },
     ]
 
-    const handleFormSubmit = (data) => {
-        console.log(data)
+    const handleFormSubmit = (formData) => {
+        const { distanceTraveled, fuelRefilled } = formData;
+        const fuelEconomy = Number(distanceTraveled) / Number(fuelRefilled);
+        const newFormData = { ...formData, fuelEconomy }
+        addFuelEconomy(
+            { formData: newFormData, userId: currentUser.uid },
+            (response) => setOpen(false), // To-Do: Add toast when success
+            (error) => setSubmitError(error.code)
+        )
     }
 
     return (
@@ -69,6 +82,9 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
                 validationSchema={fuelEfficiencyRecordValidationSchema}
                 actionButton={(handleSubmit, reset) => (
                     <>
+                        {submitError ? <View>
+                            <Text style={styles.errorMessage}>{submitError}</Text>
+                        </View> : <View />}
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <View style={{ width: '30%' }}>
                                 <Button
@@ -83,7 +99,10 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
                                     text="Clear"
                                     textColor={config1.black}
                                     buttonStyle={styles.buttonClearStyle}
-                                    onButtonPress={() => reset()}
+                                    onButtonPress={() => {
+                                        setSubmitError('')
+                                        reset()
+                                    }}
                                 />
                             </View>
                         </View>
@@ -111,6 +130,10 @@ const styles = StyleSheet.create({
         backgroundColor: config1.grey,
         paddingVertical: 8,
         paddingHorizontal: 16,
+    },
+    errorMessage: {
+        color: config1.red,
+        marginBottom: 16
     }
 })
 

@@ -70,16 +70,16 @@ const Register = ({
                     user.email,
                     user.uid,
                     () => { },
-                    (error) => console.log(error)
+                    (error) => setRegisterError(error.code)
                 )
             },
-            (error) => setRegisterError(error)
+            (error) => setRegisterError(error.code)
         )
     }
 
     const ActionButtons = (handleSubmit, reset) => (
         <>
-            {registerError ? <LoginErrorMessage code={registerError} /> : <View />}
+            {registerError ? <RegisterErrorMessage code={registerError} /> : <View />}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ width: '45%' }}>
                     <Button
@@ -187,6 +187,10 @@ const styles = StyleSheet.create({
         borderBottomColor: config1.red,
         color: config1.red,
         textAlign: 'center',
+    },
+    errorMessage: {
+        color: config1.red,
+        marginBottom: 16
     }
 })
 

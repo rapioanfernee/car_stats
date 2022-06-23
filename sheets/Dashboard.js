@@ -10,6 +10,7 @@ import AddMaintenanceRecord from './AddMaintenanceRecord'
 import DashboardConfiguration from './DashboardConfiguration';
 
 import config1 from '../colors';
+import { useCar } from '../context/car-context';
 
 const DASHBOARD_SAMPLE_DATA = {
     title: "Dashboard",
@@ -17,12 +18,22 @@ const DASHBOARD_SAMPLE_DATA = {
 }
 
 const Dashboard = () => {
+    const { currentCar } = useCar();
+
     const [openConfig, setOpenConfig] = useState(false);
     const [openAddFuelRecord, setOpenAddFuelRecord] = useState(false);
     const [openAddMaintenanceRecord, setOpenAddMaintenanceRecord] = useState(false)
 
     const onHeaderActionButtonPress = () => {
         setOpenConfig(true)
+    }
+
+    const setDashboardSubtitle = (car) => {
+        if (car === null) {
+            return '--'
+        }
+        const { engineDisplacement, maker, model, transmission, variant, year } = car
+        return `${maker} ${model} ${year} ${+engineDisplacement / 1000}L ${variant} ${transmission}`
     }
 
 
@@ -45,7 +56,7 @@ const Dashboard = () => {
             <View style={styles.headerContainer}>
                 <Header
                     title={DASHBOARD_SAMPLE_DATA.title}
-                    subtitle={DASHBOARD_SAMPLE_DATA.subtitle}
+                    subtitle={setDashboardSubtitle(currentCar)}
                     actionIcon={
                         <Image
                             style={styles.image}
@@ -81,7 +92,8 @@ const styles = StyleSheet.create({
         tintColor: config1.black,
         height: 25,
         width: 25,
-        opacity: 0.75
+        opacity: 0.75,
+        marginBottom: 16
     }
 });
 

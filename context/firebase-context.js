@@ -57,6 +57,11 @@ export const FirebaseProvider = ({ children }) => {
                 .then(onSuccess)
                 .catch(onError)
         },
+        addFuelEconomy: ({ formData, userId }, onSuccess, onError) => {
+            push(ref(db, '/fuelEconomy'), { ...formData, userId })
+                .then(onSuccess)
+                .catch(onError)
+        },
         updateUser: () => {
 
         },

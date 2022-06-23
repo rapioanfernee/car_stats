@@ -30,8 +30,8 @@ const SETTINGS = [
         subSettings: [
             {
                 id: `edit-car-info-${Math.random()}`,
-                label: "Edit car information",
-                name: 'editCarInformation',
+                label: "Edit cars",
+                name: 'editCars',
                 category: 'car',
             }
         ]

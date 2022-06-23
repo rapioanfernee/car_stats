@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         color: config1.black,
-        fontSize: 20,
+        fontSize: 18,
         opacity: 0.5
     },
 })
