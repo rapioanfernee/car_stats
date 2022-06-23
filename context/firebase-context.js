@@ -9,7 +9,7 @@ import {
     signInWithCredential,
     FacebookAuthProvider
 } from 'firebase/auth';
-import { getDatabase, ref, push } from 'firebase/database'
+import { getDatabase, ref, onValue, push } from 'firebase/database'
 
 import { firebaseConfig } from '../firebase/firebase.config'
 
@@ -58,20 +58,28 @@ export const FirebaseProvider = ({ children }) => {
                 .catch(onError)
         },
         addFuelEconomy: ({ formData, userId, carId }, onSuccess, onError) => {
-            push(ref(db, '/fuelEconomy'), { ...formData, userId, carId })
+            const dbRef = ref(db, '/fuelEconomy' + `/${userId}` + `/${carId}`)
+            push(dbRef, { ...formData, userId, carId })
                 .then(onSuccess)
                 .catch(onError)
         },
-        addMaintenanceRecord: ({ formData, userId, carId }, onSuccess, onError) => {
-            push(ref(db, '/maintenanceRecord'), { ...formData, userId, carId })
+        addExpensesRecord: ({ formData, userId, carId }, onSuccess, onError) => {
+            const dbRef = ref(db, '/expensesRecord' + `/${userId}` + `/${carId}`)
+            push(dbRef, { ...formData, userId, carId })
                 .then(onSuccess)
                 .catch(onError)
+        },
+        getData: ({ userId, carId }, path, snapshotFunction) => {
+            const dbRef = ref(db, path + `/${userId}` + `/${carId}`)
+            let data = {}
+            onValue(dbRef, snapshotFunction)
+            return data
         },
         updateUser: () => {
 
         },
         deleteUser: () => { }
-    }))
+    }), [db])
 
     const props = useMemo(() => ({
         ...authentication,

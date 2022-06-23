@@ -66,7 +66,7 @@ const Login = ({
         signInAnonymously(
             () => setOpen(false),
             (error) => {
-                console.log(error)
+                setLoginError(error.code)
             }
         );
     }

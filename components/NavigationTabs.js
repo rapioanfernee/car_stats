@@ -15,7 +15,7 @@ const NavigationTabs = () => {
         screenOptions={{
             tabBarActiveTintColor: config1.black,
             tabBarInactiveTintColor: config1.black,
-            tabBarActiveBackgroundColor: config1.olive,
+            tabBarActiveBackgroundColor: config1.white,
             tabBarInactiveBackgroundColor: config1.grey
         }}
     >
@@ -40,7 +40,7 @@ const NavigationTabs = () => {
             }}
         />
         <Tab.Screen
-            name="Maintenance"
+            name="Expenses"
             component={Fuel}
             options={{
                 headerShown: false,

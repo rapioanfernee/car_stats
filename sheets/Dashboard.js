@@ -4,9 +4,9 @@ import { StyleSheet, View, ScrollView, Image } from 'react-native';
 
 import FuelEconomy from '../components/FuelEconomy';
 import Header from '../components/Header';
-import MaintenanceRecord from '../components/MaintenanceRecord';
+import ExpensesRecord from '../components/ExpensesRecord';
 import AddFuelEfficiencyRecord from './AddFuelEfficiencyRecord';
-import AddMaintenanceRecord from './AddMaintenanceRecord'
+import AddExpensesRecord from './AddExpensesRecord'
 import DashboardConfiguration from './DashboardConfiguration';
 
 import config1 from '../colors';
@@ -22,7 +22,7 @@ const Dashboard = () => {
 
     const [openConfig, setOpenConfig] = useState(false);
     const [openAddFuelRecord, setOpenAddFuelRecord] = useState(false);
-    const [openAddMaintenanceRecord, setOpenAddMaintenanceRecord] = useState(false)
+    const [openAddExpensesRecord, setOpenAddExpensesRecord] = useState(false)
 
     const onHeaderActionButtonPress = () => {
         setOpenConfig(true)
@@ -49,8 +49,8 @@ const Dashboard = () => {
                 )
             }
             {
-                openAddMaintenanceRecord && (
-                    <AddMaintenanceRecord open={openAddMaintenanceRecord} setOpen={setOpenAddMaintenanceRecord} />
+                openAddExpensesRecord && (
+                    <AddExpensesRecord open={openAddExpensesRecord} setOpen={setOpenAddExpensesRecord} />
                 )
             }
             <View style={styles.headerContainer}>
@@ -70,8 +70,8 @@ const Dashboard = () => {
                 <View style={styles.panelContainer}>
                     <FuelEconomy setOpenAddFuelRecord={setOpenAddFuelRecord} />
                 </View>
-                <View style={styles.panelContainer}>
-                    <MaintenanceRecord setOpenAddMaintenanceRecord={setOpenAddMaintenanceRecord} />
+                <View style={{ ...styles.panelContainer, marginBottom: 64 }}>
+                    <ExpensesRecord setOpenAddExpensesRecord={setOpenAddExpensesRecord} />
                 </View>
             </View>
         </ScrollView>

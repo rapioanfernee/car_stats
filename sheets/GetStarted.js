@@ -39,7 +39,7 @@ const GetStarted = ({ open, setOpen, setLoginScreenOpen }) => {
                         </View>
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>
-                                Or just want to check your car's maintenance record?
+                                Or just want to check your car's expenses record?
                             </Text>
                         </View>
                         <View style={{ ...styles.titleContainer, marginTop: 32 }}>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         tintColor: "rgba(185, 186, 163, 0.1)"
     },
     title: {
-        color: 'white',
+        color: config1.white,
         fontSize: 24,
         textAlign: 'center',
         fontWeight: "bold"

@@ -52,7 +52,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
     const handleFormSubmit = (formData) => {
         const { distanceTraveled, fuelRefilled } = formData;
         const fuelEconomy = Number(distanceTraveled) / Number(fuelRefilled);
-        const newFormData = { ...formData, fuelEconomy }
+        const newFormData = { ...formData, fuelEconomy: fuelEconomy.toFixed(1) }
         addFuelEconomy(
             { formData: newFormData, userId: currentUser.uid, carId: currentCar.id },
             (response) => setOpen(false), // To-Do: Add toast when success

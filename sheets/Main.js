@@ -57,7 +57,7 @@ export default function Main() {
 
     return (
         <NavigationContainer>
-            <StatusBar style='auto' />
+            {/* <StatusBar style='auto' /> */}
             {startScreenOpen && (
                 <GetStarted
                     open={startScreenOpen}

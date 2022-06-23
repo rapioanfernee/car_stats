@@ -7,15 +7,15 @@ import Form from '../components/Form'
 
 import config1 from '../colors'
 
-import maintenanceRecordValidationSchema from '../components/formSchemas/maintenanceRecordValidationSchema'
+import expensesRecordValidationSchema from '../components/formSchemas/expensesRecordValidationSchema'
 import DatePickerTextInput from '../components/DatePickerTextInput';
 
 import { useFirebase } from '../context/firebase-context';
 import { useUser } from '../context/user-context';
 import { useCar } from '../context/car-context'
 
-const AddMaintenanceRecord = ({ open, setOpen }) => {
-    const { addMaintenanceRecord } = useFirebase();
+const AddExpensesRecord = ({ open, setOpen }) => {
+    const { addExpensesRecord } = useFirebase();
     const { currentUser } = useUser()
     const { currentCar } = useCar()
 
@@ -35,7 +35,7 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
         },
         {
             defaultValue: '',
-            id: `distance-traveled-${Math.random(100)}`,
+            id: `total-price-${Math.random(100)}`,
             keyboardType: 'number-pad',
             label: "Total Price",
             name: 'totalPrice',
@@ -44,13 +44,24 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
         },
         {
             defaultValue: '',
-            id: `distance-traveled-${Math.random(100)}`,
+            id: `odometer-reading-${Math.random(100)}`,
             keyboardType: 'number-pad',
             label: "Odometer Reading",
             name: 'odometerReading',
             placeHolder: '0',
             required: false,
-
+        },
+        {
+            defaultValue: '',
+            id: `description-${Math.random(100)}`,
+            keyboardType: 'default',
+            label: "Description",
+            numberOfLines: 3,
+            multiline: true,
+            name: 'description',
+            placeHolder: '0',
+            required: true,
+            textAlignVertical: 'top'
         },
         // {
         //     defaultValue: '',
@@ -65,8 +76,7 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
     ]
 
     const handleFormSubmit = (formData) => {
-        console.log(formData)
-        addMaintenanceRecord(
+        addExpensesRecord(
             { formData, userId: currentUser.uid, carId: currentCar.id },
             (response) => setOpen(false), // To-Do: Add toast when success
             (error) => setSubmitError(error.code)
@@ -77,7 +87,7 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
         <Modal visible={open} animationType="slide">
             <View style={styles.dashboardContainer}>
                 <Header
-                    title="Add maintenance record"
+                    title="Add expenses"
                     actionIcon={
                         <Image
                             style={{
@@ -93,7 +103,7 @@ const AddMaintenanceRecord = ({ open, setOpen }) => {
             <Form
                 fields={fields}
                 handleFormSubmit={handleFormSubmit}
-                validationSchema={maintenanceRecordValidationSchema}
+                validationSchema={expensesRecordValidationSchema}
                 actionButton={(handleSubmit, reset) => (
                     <>
                         {submitError ? <View>
@@ -147,4 +157,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AddMaintenanceRecord
+export default AddExpensesRecord

@@ -8,7 +8,6 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
-    console.log(currentUser)
     const userValues = {
         currentUser,
         setCurrentUser

@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import Button from './Button';
-import FuelEfficiencyTile from './FuelEconomyTile';
+import ExpensesRecordTile from './ExpensesRecordTile';
 
 import config1 from '../colors'
 
 import { useUser } from '../context/user-context';
 import { useFirebase } from '../context/firebase-context';
 import { useCar } from '../context/car-context';
-
-const FuelEconomy = ({ setOpenAddFuelRecord }) => {
+const ExpensesRecord = ({ setOpenAddExpensesRecord }) => {
 
     const { currentUser } = useUser();
     const { currentCar } = useCar();
     const { getData } = useFirebase();
 
-    const [fuelEconomyData, setFuelEconomyData] = useState(null);
+    const [expensesData, setExpensesData] = useState(null);
 
     const transformData = (data) => Object.keys(data).map((key) => ({
         id: key,
@@ -23,52 +22,47 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
     })).sort((a, b) => Number(b.odometerReading) - Number(a.odometerReading))
 
 
-
     const onAddButton = () => {
-        setOpenAddFuelRecord(true)
+        setOpenAddExpensesRecord(true)
     }
 
     useEffect(() => {
         getData(
             { userId: currentUser.uid, carId: currentCar.id },
-            '/fuelEconomy',
+            '/expensesRecord',
             (snapshot) => {
                 const data = snapshot.val();
-                setFuelEconomyData(transformData(data))
+                setExpensesData(transformData(data))
             }
         )
     }, [])
 
     return (
-        <View style={styles.fuelEfficiencyContainer}>
+        <View style={styles.ExpensesRecordContainer}>
             <View style={styles.titleContainer}>
                 <View>
-                    <Text style={styles.title}>Fuel Economy</Text>
-                    <Text style={styles.subtitle}>Latest three records</Text>
+                    <Text style={styles.title}>Expenses Record</Text>
+                    <Text style={styles.subtitle}>Latest two records</Text>
                 </View>
                 <View>
-                    <Button
-                        onButtonPress={onAddButton}
-                        icon={
-                            <Image
-                                style={{
-                                    height: 40,
-                                    width: 40,
-                                    tintColor: config1.white
-                                }}
-                                source={require('../assets/images/plus-sign-icon-31.png')}
-                            />
-                        }
-                    />
+                    <Button onButtonPress={onAddButton} icon={
+                        <Image
+                            style={{
+                                height: 40,
+                                width: 40,
+                                tintColor: config1.white
+                            }}
+                            source={require('../assets/images/plus-sign-icon-31.png')}
+                        />
+                    } />
                 </View>
             </View>
-            {fuelEconomyData && fuelEconomyData.slice(
-                // Get latest 3 entries
-                fuelEconomyData.length > 3 ? fuelEconomyData.length - 3 : 0,
-                fuelEconomyData.length
+            {expensesData && expensesData.slice(
+                expensesData.length > 2 ? expensesData.length - 2 : 0, // Get latest 2 entries
+                expensesData.length
             ).map((data, index) => (
                 <View key={`${data.id}-${index}`}>
-                    <FuelEfficiencyTile data={data} />
+                    <ExpensesRecordTile data={data} />
                 </View>
             ))}
         </View>
@@ -76,7 +70,7 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
 }
 
 const styles = StyleSheet.create({
-    fuelEfficiencyContainer: {
+    ExpensesRecordContainer: {
         backgroundColor: config1.olive,
         borderRadius: 16,
         padding: 16,
@@ -98,4 +92,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default FuelEconomy;
+export default ExpensesRecord;

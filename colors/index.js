@@ -6,7 +6,8 @@ const config1 = {
     olive: "#B9BAA3",
     grey: "#D6D5C9",
     red: "#A22C29",
-    maroon: "#902923"
+    maroon: "#902923",
+    white: '#ffffff',
 }
 
 export default config1
