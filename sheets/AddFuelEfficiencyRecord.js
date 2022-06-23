@@ -91,7 +91,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
                             <View style={{ width: '30%' }}>
                                 <Button
                                     text="Submit"
-                                    textColor="white"
+                                    textColor={config1.text2}
                                     buttonStyle={styles.buttonSubmitStyle}
                                     onButtonPress={handleSubmit(handleFormSubmit)}
                                 />
@@ -99,7 +99,7 @@ const AddFuelEfficiencyRecord = ({ open, setOpen }) => {
                             <View style={{ width: '30%', marginHorizontal: 16 }}>
                                 <Button
                                     text="Clear"
-                                    textColor={config1.black}
+                                    textColor={config1.text1}
                                     buttonStyle={styles.buttonClearStyle}
                                     onButtonPress={() => {
                                         setSubmitError('')
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     buttonClearStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: config1.grey,
+        backgroundColor: config1.panel2,
         paddingVertical: 8,
         paddingHorizontal: 16,
     },

@@ -1,10 +1,12 @@
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
 
+import config1 from '../colors'
+
 const Button = ({ buttonStyle, icon, onButtonPress, text, textColor }) => {
     const styles = StyleSheet.create({
         textButton: buttonStyle ? buttonStyle : { elevation: 5 },
         text: {
-            color: textColor ? textColor : 'black',
+            color: textColor ? textColor : config1.text1,
             textAlign: 'center'
         }
     })

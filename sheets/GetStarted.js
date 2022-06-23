@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         tintColor: "rgba(185, 186, 163, 0.1)"
     },
     title: {
-        color: config1.white,
+        color: config1.text2,
         fontSize: 24,
         textAlign: 'center',
         fontWeight: "bold"

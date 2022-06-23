@@ -54,7 +54,7 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
                                 style={{
                                     height: 40,
                                     width: 40,
-                                    tintColor: config1.white
+                                    tintColor: config1.text2
                                 }}
                                 source={require('../assets/images/plus-sign-icon-31.png')}
                             />
@@ -77,7 +77,7 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
 
 const styles = StyleSheet.create({
     fuelEfficiencyContainer: {
-        backgroundColor: config1.olive,
+        backgroundColor: config1.panel1,
         borderRadius: 16,
         padding: 16,
         elevation: 4
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     title: {
-        color: config1.black,
+        color: config1.text1,
         fontSize: 28,
         fontWeight: 'bold'
     },
     subtitle: {
-        color: config1.black,
+        color: config1.text1,
         fontSize: 14,
     },
 })

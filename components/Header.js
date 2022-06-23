@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        color: config1.black,
+        color: config1.text1,
         fontSize: 38,
         fontWeight: 'bold'
     },
     subtitle: {
-        color: config1.black,
+        color: config1.text1,
         fontSize: 18,
         opacity: 0.5
     },

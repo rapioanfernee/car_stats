@@ -28,7 +28,7 @@ const Form = ({
         if (field.customField) {
             const { CustomFieldComponent } = field
             const customStyle = {
-                borderColor: errors[field.name]?.message ? 'red' : config1.grey,
+                borderColor: errors[field.name]?.message ? 'red' : config1.panel2,
             }
             const fieldProps = { onChange, onBlur, value, field, customStyle }
             return <CustomFieldComponent {...fieldProps} />
@@ -37,7 +37,7 @@ const Form = ({
         return <TextInput
             style={{
                 ...styles.textInput,
-                borderColor: errors[field.name]?.message ? 'red' : config1.grey,
+                borderColor: errors[field.name]?.message ? 'red' : config1.panel2,
             }}
             onBlur={onBlur}
             onChangeText={(val) => {

@@ -25,7 +25,7 @@ const FuelEfficiencyTile = ({ data }) => {
 
 const styles = StyleSheet.create({
     tileContainer: {
-        backgroundColor: config1.olive,
+        backgroundColor: config1.panel1,
         borderRadius: 8,
         paddingVertical: 16,
         flexDirection: 'column',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         marginRight: 8
     },
     value: {
-        color: config1.white,
+        color: config1.text2,
         fontSize: 20,
         fontWeight: "bold",
         textAlign: 'right'
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         fontWeight: "300"
     },
     unit: {
-        color: config1.white,
+        color: config1.text2,
         fontSize: 14,
         textAlign: 'right'
     }

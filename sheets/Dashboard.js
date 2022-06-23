@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         marginVertical: 16
     },
     image: {
-        tintColor: config1.black,
+        tintColor: config1.text1,
         height: 25,
         width: 25,
         opacity: 0.75,

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     datePickerIconStyle: {
         border: 1,
         borderRadius: 8,
-        backgroundColor: config1.grey,
+        backgroundColor: config1.panel2,
         paddingVertical: 13,
         paddingHorizontal: 32,
         //absolute positioning

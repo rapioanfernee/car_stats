@@ -114,13 +114,13 @@ const UserSettings = () => {
                                                         {setting.label}
                                                     </Text>
                                                 </TouchableOpacity>
-                                                <HorizontalLine borderColor={config1.grey} marginLeft={16} />
+                                                <HorizontalLine borderColor={config1.panel2} marginLeft={16} />
                                             </View>
                                         ))}
                                     </View>
                                 </View>
                                 {indexFirst !== SETTINGS.length - 1 && (
-                                    <HorizontalLine borderColor={config1.black} marginLeft={0} />
+                                    <HorizontalLine borderColor={config1.text1} marginLeft={0} />
                                 )}
                             </View>
                         ))}
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         marginTop: 16
     },
     image: {
-        tintColor: config1.black,
+        tintColor: config1.text1,
         height: 50,
         width: 50,
     },

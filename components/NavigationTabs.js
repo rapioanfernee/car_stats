@@ -13,10 +13,10 @@ const Tab = createBottomTabNavigator()
 const NavigationTabs = () => {
     return <Tab.Navigator
         screenOptions={{
-            tabBarActiveTintColor: config1.black,
-            tabBarInactiveTintColor: config1.black,
-            tabBarActiveBackgroundColor: config1.white,
-            tabBarInactiveBackgroundColor: config1.grey
+            tabBarActiveTintColor: config1.text1,
+            tabBarInactiveTintColor: config1.text1,
+            tabBarActiveBackgroundColor: config1.text2,
+            tabBarInactiveBackgroundColor: config1.panel2
         }}
     >
         <Tab.Screen
