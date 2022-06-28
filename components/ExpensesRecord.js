@@ -32,7 +32,7 @@ const ExpensesRecord = ({ setOpenAddExpensesRecord }) => {
             '/expensesRecord',
             (snapshot) => {
                 const data = snapshot.val();
-                setExpensesData(transformData(data))
+                setExpensesData(data ? transformData(data) : [])
             }
         )
     }, [])

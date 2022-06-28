@@ -34,7 +34,7 @@ const FuelEconomy = ({ setOpenAddFuelRecord }) => {
             '/fuelEconomy',
             (snapshot) => {
                 const data = snapshot.val();
-                setFuelEconomyData(transformData(data))
+                setFuelEconomyData(data ? transformData(data) : [])
             }
         )
     }, [])

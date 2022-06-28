@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 
 import NavigationTabs from '../components/NavigationTabs';
+import LoadingOverlay from './LoadingOverlay'
 import GetStarted from './GetStarted';
 import Login from './Login';
 import Register from './Register';
@@ -10,7 +11,7 @@ import { useUser } from '../context/user-context';
 import { useFirebase } from '../context/firebase-context';
 
 export default function Main() {
-    const { onAuthStateChanged } = useFirebase();
+    const { onAuthStateChanged, accessToken, loadingToken, storeToken, removeToken } = useFirebase();
 
     const { currentUser, setCurrentUser } = useUser();
 
@@ -25,9 +26,11 @@ export default function Main() {
         onAuthStateChanged(authUser => {
             if (authUser !== null) {
                 setCurrentUser(authUser)
+                storeToken(authUser.accessToken)
             }
             else {
                 setCurrentUser(null)
+                removeToken()
             }
         })
     }
@@ -54,9 +57,16 @@ export default function Main() {
         initializeFirebase();
     }, [])
 
+    useEffect(() => {
+        console.log({
+            loadingToken,
+            accessToken
+        })
+    }, [loadingToken])
 
     return (
         <NavigationContainer>
+
             {/* <StatusBar style='auto' /> */}
             {startScreenOpen && (
                 <GetStarted
@@ -88,6 +98,7 @@ export default function Main() {
                     />
                 )
             }
+            {/* <LoadingOverlay />  To-Do : Add overlay when loading user*/}
             {authenticated && <NavigationTabs />}
         </NavigationContainer >
     );

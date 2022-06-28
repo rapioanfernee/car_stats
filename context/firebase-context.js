@@ -10,6 +10,7 @@ import {
     FacebookAuthProvider
 } from 'firebase/auth';
 import { getDatabase, ref, onValue, push } from 'firebase/database'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { firebaseConfig } from '../firebase/firebase.config'
 
@@ -23,8 +24,29 @@ export const FirebaseProvider = ({ children }) => {
     const firebaseApp = initializeApp(firebaseConfig)
     const db = getDatabase(firebaseApp)
 
-
     const [auth, setAuth] = useState(getAuth(firebaseApp));
+    const [accessToken, setAccessToken] = useState(null);
+    const [loadingToken, setLoadingToken] = useState(false);
+
+    const fetchToken = async () => {
+        setLoadingToken(true)
+        const storedToken = await AsyncStorage.getItem('token');
+
+        if (storedToken) {
+            setAccessToken(storedToken)
+        }
+        setLoadingToken(false)
+    }
+
+    const storeToken = (token) => {
+        AsyncStorage.setItem('token', token)
+        setAccessToken(token)
+    }
+
+    const removeToken = () => {
+        AsyncStorage.removeItem('token')
+        setAccessToken(null)
+    }
 
     const authentication = useMemo(() => ({
         auth,
@@ -81,19 +103,27 @@ export const FirebaseProvider = ({ children }) => {
         deleteUser: () => { }
     }), [db])
 
+    const token = useMemo(() => ({
+        setAccessToken,
+        accessToken,
+        storeToken,
+        removeToken,
+        fetchToken,
+        loadingToken
+    }), [accessToken, loadingToken])
+
     const props = useMemo(() => ({
         ...authentication,
         ...database,
-    }), [authentication,])
-
+        ...token
+    }), [authentication])
 
     useEffect(() => {
-
+        fetchToken();
     }, [])
 
-
     return (
-        <FirebaseContext.Provider value={props}>
+        <FirebaseContext.Provider value={{ ...props, ...token }}>
             {children}
         </FirebaseContext.Provider>
     )
